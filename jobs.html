@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Jobs | MDS Search</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Browse open roles and apply to MDS Search opportunities." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link href="assets/css/styles.css" rel="stylesheet" />
+    <link rel="icon" href="favicon.ico" />
+    <meta property="og:title" content="Jobs | MDS Search" />
+    <meta property="og:description" content="Browse open roles and apply to MDS Search opportunities." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://mdssearch.com/assets/img/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "MDS Search",
+  "url": "https://mdssearch.com",
+  "areaServed": "US",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Los Angeles",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  },
+  "telephone": "+3109715198",
+  "email": "howard@mdssearch.com",
+  "serviceType": "Executive search and recruiting",
+  "sameAs": []
+}
+    </script>
+    
+</head>
+<body class="d-flex flex-column min-vh-100" data-page="jobs">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-glass fixed-top" aria-label="Primary navigation">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <img src="assets/img/logo-transparent.png" alt="MDS Search logo" width="38" height="38" class="brand-mark" />
+        <span class="brand-name">MDS Search</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="clients.html" data-nav="clients">Clients</a></li>
+          <li class="nav-item"><a class="nav-link" href="candidates.html" data-nav="candidates">Candidates</a></li>
+          <li class="nav-item"><a class="nav-link" href="expertise.html" data-nav="expertise">Expertise</a></li>
+          <li class="nav-item"><a class="nav-link" href="jobs.html" data-nav="jobs">Jobs</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-nav="about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html" data-nav="contact">Contact</a></li>
+        </ul>
+        <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
+          <a class="btn btn-sm btn-outline-light" href="mailto:howard@mdssearch.com">Email</a>
+          <a class="btn btn-sm btn-primary" href="tel:+13109715198">Call</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<main class="flex-grow-1">
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="row g-4 align-items-end">
+        <div class="col-lg-8">
+          <div class="kicker text-dark">
+            <span class="kicker-dot"></span>
+            Jobs
+          </div>
+          <h1 class="mt-2">Open roles</h1>
+          <p class="lead text-muted mb-0">Browse current searches and apply directly.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a class="btn btn-primary" href="candidates.html#submit">Submit resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4" data-aos="fade-up">
+          <div class="notice">
+            <div class="fw-semibold mb-1">Connected to LOXO</div>
+            <div class="small-muted">
+              This page is designed to embed your LOXO job board via an iframe. In LOXO, publish roles to your public job site, then paste that job-site URL below.
+            </div>
+            <hr class="hr-fade my-3"/>
+            <div class="small-muted mb-2"><strong>To update:</strong> open <code>jobs.html</code> and replace the iframe <code>src</code>.</div>
+            <div class="d-grid gap-2">
+              <a class="btn btn-outline-secondary" href="contact.html">Hiring? Contact us</a>
+              <a class="btn btn-outline-secondary" href="candidates.html#submit">Candidate intake</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8" data-aos="fade-up" data-aos-delay="80">
+          <div class="job-embed">
+            <iframe
+              class="jobs-embed-iframe"
+              title="MDS Search Job Board"
+              src="https://pod5.app.loxo.co/mds-search?react_fallback=true"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+
+          </div>
+          <div class="small text-muted mt-2">
+            If your LOXO board won’t embed due to security headers, switch to a simple “Open roles” link button pointing to your LOXO job site instead.
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5" data-aos="fade-up">
+        <div class="col-lg-12">
+          <div class="notice">
+            <div class="fw-semibold mb-1">Want a fully native (non-iframe) job board later?</div>
+            <div class="small-muted">
+              It’s doable, but usually requires a server-side integration (API) or a specialized plugin. The iframe approach is the fastest to launch and is commonly recommended for simple integrations. 
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+  <footer class="footer mt-auto">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <img src="assets/img/logo-transparent.png" alt="MDS Search" width="44" height="44" />
+            <div>
+              <div class="fw-semibold">MDS Search</div>
+              <div class="text-muted small">Founder-led executive search • Los Angeles, CA</div>
+            </div>
+          </div>
+          <p class="text-muted mb-3">
+            Retained & contingency search across GTM, Engineering, Product, Finance, Operations, and HR — from C‑suite to IC.
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-sm btn-primary" href="contact.html">Book a call</a>
+            <a class="btn btn-sm btn-outline-secondary" href="mailto:howard@mdssearch.com">howard@mdssearch.com</a>
+            <a class="btn btn-sm btn-outline-secondary" href="tel:+13109715198">(310) 971-5198</a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <div class="fw-semibold mb-2">Company</div>
+          <ul class="list-unstyled small">
+            <li><a class="footer-link" href="about.html">About</a></li>
+            <li><a class="footer-link" href="expertise.html">Expertise</a></li>
+            <li><a class="footer-link" href="jobs.html">Jobs</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <div class="fw-semibold mb-2">Work with us</div>
+          <ul class="list-unstyled small">
+            <li><a class="footer-link" href="clients.html">For clients</a></li>
+            <li><a class="footer-link" href="candidates.html">For candidates</a></li>
+            <li><a class="footer-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <div class="fw-semibold mb-2">Legal</div>
+          <ul class="list-unstyled small mb-0">
+            <li><a class="footer-link" href="privacy.html">Privacy</a></li>
+          </ul>
+          <div class="text-muted small mt-3">
+            © 2025 MDS Search. All rights reserved.
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>
