@@ -135,7 +135,7 @@ body { color: #0c1220; background: #ffffff; }
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.02;
-  font-size: clamp(2.2rem, 5vw, 3.9rem);
+  font-size: clamp(2.05rem, 4.35vw, 3.55rem);
   margin: 14px 0 14px;
 }
 .hero p.lead{
@@ -271,6 +271,42 @@ body { color: #0c1220; background: #ffffff; }
 
 .small-muted{ color: rgba(12,18,32,.70); font-size: .95rem; }
 
+
+
+
+/* Hero title row (logo next to headline) */
+.hero-title-row{
+  display:flex;
+  align-items:center;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.logo-badge{
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 14px 34px rgba(0,0,0,.28);
+  backdrop-filter: blur(4px);
+}
+
+.hero-logo-inline{
+  display:block;
+  width: 86px;
+  height: auto;
+}
+
+@media (max-width: 991.98px){
+  .hero-title-row{ flex-wrap: wrap; }
+  .hero-logo-inline{ width: 76px; }
+}
+
+@media (max-width: 420px){
+  .hero-title-row{ gap: 12px; }
+  .logo-badge{ padding: 8px; border-radius: 16px; }
+  .hero-logo-inline{ width: 68px; }
+}
 
 .hero-brand{
   display:flex;
