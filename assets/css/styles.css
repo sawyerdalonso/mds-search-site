@@ -16,6 +16,19 @@ body { color: #0c1220; background: #ffffff; }
 .brand-name{ letter-spacing:.2px; font-weight:600; }
 .brand-mark{ filter: drop-shadow(0 8px 18px rgba(0,0,0,.18)); }
 
+/* Navbar logo sizing: readable without making the nav too tall */
+.navbar{ padding-top: .55rem; padding-bottom: .55rem; }
+.navbar-brand .brand-mark{
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.22);
+}
+@media (max-width: 991.98px){
+  .navbar{ padding-top: .50rem; padding-bottom: .50rem; }
+  .navbar-brand .brand-mark{ width: 40px; height: 40px; }
+}
+
 .navbar-glass{
   transition: background-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease;
   background: rgba(5, 10, 18, .25);
@@ -75,7 +88,7 @@ body { color: #0c1220; background: #ffffff; }
   background:
     radial-gradient(1100px 700px at 10% 20%, rgba(30,79,184,.45), transparent 60%),
     radial-gradient(1000px 650px at 90% 70%, rgba(26,166,168,.35), transparent 55%),
-    linear-gradient(180deg, rgba(5,10,18,.78), rgba(5,10,18,.62)),
+    linear-gradient(180deg, rgba(5,10,18,.55), rgba(5,10,18,.40)),
     url("/assets/img/hero-fallback.jpg");
   background-size: cover;
   background-position: center;
@@ -96,7 +109,7 @@ body { color: #0c1220; background: #ffffff; }
   content:"";
   position:absolute;
   inset:0;
-  background: linear-gradient(180deg, rgba(5,10,18,.20), rgba(5,10,18,.62));
+  background: linear-gradient(180deg, rgba(5,10,18,.10), rgba(5,10,18,.42));
   pointer-events:none;
 }
 
@@ -106,8 +119,8 @@ body { color: #0c1220; background: #ffffff; }
   width:100%;
   height:100%;
   object-fit:cover;
-  opacity:.45;
-  filter: saturate(1.05) contrast(1.05);
+  opacity:.62;
+  filter: saturate(1.08) contrast(1.02);
 }
 
 .hero .container{
@@ -332,8 +345,7 @@ body { color: #0c1220; background: #ffffff; }
 
 /* Keep the hero headline on one line on desktop; allow wrapping on smaller screens */
 .hero-title{
-  white-space: nowrap;
-  font-size: clamp(2.2rem, 4.6vw, 3.7rem);
+  white-space: normal;
 }
 
 @media (max-width: 991.98px){
