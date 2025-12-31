@@ -1,6 +1,6 @@
 :root{
-  --mds-navy:#0b234d;
-  --mds-blue:#1e4fb8;
+  --mds-navy:#12315f;
+  --mds-blue:#2a63d8;
   --mds-teal:#1aa6a8;
   --mds-ink:#071018;
   --mds-surface:#0b1424;
@@ -75,7 +75,7 @@ body { color: #0c1220; background: #ffffff; }
   background:
     radial-gradient(1100px 700px at 10% 20%, rgba(30,79,184,.45), transparent 60%),
     radial-gradient(1000px 650px at 90% 70%, rgba(26,166,168,.35), transparent 55%),
-    linear-gradient(180deg, rgba(5,10,18,.90), rgba(5,10,18,.75)),
+    linear-gradient(180deg, rgba(5,10,18,.78), rgba(5,10,18,.62)),
     url("/assets/img/hero-fallback.jpg");
   background-size: cover;
   background-position: center;
@@ -96,7 +96,7 @@ body { color: #0c1220; background: #ffffff; }
   content:"";
   position:absolute;
   inset:0;
-  background: linear-gradient(180deg, rgba(5,10,18,.20), rgba(5,10,18,.75));
+  background: linear-gradient(180deg, rgba(5,10,18,.20), rgba(5,10,18,.62));
   pointer-events:none;
 }
 
@@ -106,7 +106,7 @@ body { color: #0c1220; background: #ffffff; }
   width:100%;
   height:100%;
   object-fit:cover;
-  opacity:.35;
+  opacity:.45;
   filter: saturate(1.05) contrast(1.05);
 }
 
@@ -270,3 +270,9 @@ body { color: #0c1220; background: #ffffff; }
 
 
 .small-muted{ color: rgba(12,18,32,.70); font-size: .95rem; }
+
+
+.hero-logo{
+  width: clamp(88px, 10vw, 140px);
+  height: auto;
+}
