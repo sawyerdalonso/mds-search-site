@@ -89,7 +89,7 @@ body { color: #0c1220; background: #ffffff; }
     radial-gradient(1100px 700px at 10% 20%, rgba(30,79,184,.45), transparent 60%),
     radial-gradient(1000px 650px at 90% 70%, rgba(26,166,168,.35), transparent 55%),
     linear-gradient(180deg, rgba(5,10,18,.45), rgba(5,10,18,.30)),
-    url("/assets/img/hero-fallback.jpg");
+    url("assets/img/hero-fallback.jpg");
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -119,11 +119,16 @@ body { color: #0c1220; background: #ffffff; }
   width:100%;
   height:100%;
   object-fit:cover;
-  opacity:.78;
+  opacity: 0;
+  transition: opacity .35s ease;
   filter: saturate(1.08) contrast(1.02) brightness(1.06);
 }
 
-.hero .container{
+/* Once the video can render a frame, fade it in over the poster/fallback image */
+.hero video.is-ready{ opacity: .82; }
+
+.hero .container,
+.hero .container-fluid{
   position: relative;
   z-index: 2;
 }
@@ -152,8 +157,16 @@ body { color: #0c1220; background: #ffffff; }
   margin: 14px 0 14px;
 }
 .hero p.lead{
-  max-width: 60ch;
+  max-width: none;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   color: rgba(255,255,255,.86);
+  font-size: clamp(.98rem, 1.05vw, 1.18rem);
+}
+
+@media (min-width: 992px){
+  .hero p.lead{ white-space: nowrap; }
 }
 
 .hero-card{
