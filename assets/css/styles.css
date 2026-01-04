@@ -362,3 +362,13 @@ body { color: #0c1220; background: #ffffff; }
 @media (max-width: 991.98px){
   .hero-title{ white-space: normal; }
 }
+
+/* --- Jobs embed robustness (LOXO iframe) ---
+   Some devices show an in-iframe share/social rail that can overlap content.
+   We can't style inside the iframe, so we:
+   1) avoid cramped widths by switching the jobs layout to XL breakpoint in jobs.html
+   2) give the iframe ample height on common tablet sizes
+*/
+@media (min-width: 768px) and (max-width: 1199.98px){
+  .job-embed{ height: 92vh; min-height: 820px; }
+}
