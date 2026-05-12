@@ -1,32 +1,70 @@
+/* =============================================================
+   1. TOKENS
+   ============================================================= */
 :root{
-  --mds-navy:#12315f;
-  --mds-blue:#2a63d8;
-  --mds-teal:#1aa6a8;
-  --mds-ink:#071018;
-  --mds-surface:#0b1424;
-  --mds-mist:#f6f8fb;
-  --mds-border:rgba(255,255,255,.12);
+  --mds-navy: #12315f;
+  --mds-blue: #2a63d8;
+  --mds-blue-700: #2456c2;
+  --mds-teal: #1aa6a8;
+  --mds-ink: #071018;
+  --mds-surface: #0b1424;
+  --mds-mist: #f6f8fb;
+  --mds-text: #0c1220;
+  --mds-text-muted: rgba(12,18,32,.72);
+  --mds-border: rgba(255,255,255,.12);
   --mds-shadow: 0 16px 40px rgba(0,0,0,.18);
-  --mds-radius: 18px;
+  --mds-radius-sm: 10px;
+  --mds-radius-md: 14px;
+  --mds-radius-lg: 18px;
 }
 
+/* =============================================================
+   2. BASE
+   ============================================================= */
 html, body { font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
-body { color: #0c1220; background: #ffffff; }
+body { color: var(--mds-text); background: #ffffff; }
 
-.brand-name{ letter-spacing:.2px; font-weight:600; }
-.brand-mark{ filter: drop-shadow(0 8px 18px rgba(0,0,0,.18)); }
+/* =============================================================
+   3. TYPOGRAPHY HELPERS
+   ============================================================= */
+.brand-name { letter-spacing: .02em; font-weight: 600; }
+.brand-mark { filter: drop-shadow(0 4px 8px rgba(0,0,0,.14)); }
 
-/* Navbar logo sizing: readable without making the nav too tall */
-.navbar{ padding-top: .55rem; padding-bottom: .55rem; }
+.kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: .75rem;
+  color: rgba(255,255,255,.80);
+}
+.kicker-dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--mds-teal);
+  flex-shrink: 0;
+}
+
+.small-muted { color: var(--mds-text-muted); font-size: .95rem; }
+
+/* =============================================================
+   4. LAYOUT PRIMITIVES
+   ============================================================= */
+.section { padding: 88px 0; }
+.section-tight { padding: 64px 0; }
+.section-top-pad { padding-top: 112px; }
+.hr-fade { height: 1px; background: rgba(10,20,35,.10); border: 0; }
+
+/* =============================================================
+   5. NAVBAR
+   ============================================================= */
+.navbar { padding-top: .55rem; padding-bottom: .55rem; }
 .navbar-brand .brand-mark{
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.22);
-}
-@media (max-width: 991.98px){
-  .navbar{ padding-top: .50rem; padding-bottom: .50rem; }
-  .navbar-brand .brand-mark{ width: 40px; height: 40px; }
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
 }
 
 .navbar-glass{
@@ -35,216 +73,176 @@ body { color: #0c1220; background: #ffffff; }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,.06);
 }
-
 .navbar-glass.scrolled{
-  background: rgba(6, 12, 22, .82);
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  background: rgba(6, 12, 22, .92);
+  box-shadow: 0 4px 20px rgba(0,0,0,.22);
 }
 
-.navbar .nav-link{
-  color: rgba(255,255,255,.82);
-  font-weight: 500;
+/* Sub-pages: navbar starts solid over the light page-hero */
+body:not([data-page="home"]) .navbar-glass{
+  background: rgba(6, 12, 22, .92);
 }
+
+.navbar .nav-link{ color: rgba(255,255,255,.82); font-weight: 500; }
 .navbar .nav-link:hover{ color: #fff; }
-.navbar .nav-link.active{
-  color:#fff;
-  position:relative;
-}
+.navbar .nav-link.active{ color: #fff; position: relative; }
 .navbar .nav-link.active:after{
-  content:"";
-  position:absolute;
-  left:.75rem;
-  right:.75rem;
-  bottom:.35rem;
-  height:2px;
-  background: linear-gradient(90deg, var(--mds-blue), var(--mds-teal));
+  content: "";
+  position: absolute;
+  left: .75rem;
+  right: .75rem;
+  bottom: .35rem;
+  height: 2px;
+  background: var(--mds-blue);
   border-radius: 10px;
 }
 
-.btn-primary{
-  border: none;
-  background: linear-gradient(90deg, var(--mds-blue), var(--mds-teal));
-  box-shadow: 0 10px 24px rgba(30,79,184,.25);
-}
-.btn-primary:hover{ filter: brightness(1.03); }
-.btn-outline-light{ border-color: rgba(255,255,255,.45); }
-
-.section{
-  padding: 88px 0;
-}
-.section-tight{ padding: 64px 0; }
-.section-top-pad{ padding-top: 112px; } /* accounts for fixed nav */
-@media (max-width: 991.98px){
-  .section{ padding: 72px 0; }
-  .section-top-pad{ padding-top: 96px; }
-}
-
+/* =============================================================
+   6. HERO
+   ============================================================= */
 .hero{
   position: relative;
-  min-height: 92vh;
+  min-height: 78vh;
   display: grid;
   align-items: center;
   color: #fff;
   background:
-    radial-gradient(1100px 700px at 10% 20%, rgba(30,79,184,.45), transparent 60%),
-    radial-gradient(1000px 650px at 90% 70%, rgba(26,166,168,.35), transparent 55%),
-    linear-gradient(180deg, rgba(5,10,18,.45), rgba(5,10,18,.30)),
-    url("assets/img/hero-fallback.jpg");
+    linear-gradient(180deg, rgba(7,16,24,.55), rgba(7,16,24,.70)),
+    url("../img/hero-fallback.jpg");
   background-size: cover;
   background-position: center;
   overflow: hidden;
 }
 
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(1100px 700px at 10% 20%, rgba(30,79,184,.35), transparent 60%),
-    radial-gradient(1000px 650px at 90% 70%, rgba(26,166,168,.28), transparent 55%);
-  pointer-events:none;
-  opacity:.9;
-}
+/* Additional bottom-heavy overlay so text is always readable over the video */
 .hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(180deg, rgba(5,10,18,.08), rgba(5,10,18,.34));
-  pointer-events:none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7,16,24,.25), rgba(7,16,24,.55));
+  pointer-events: none;
 }
 
 .hero video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
-  transition: opacity .35s ease;
-  filter: saturate(1.08) contrast(1.02) brightness(1.06);
+  transition: opacity .5s ease;
 }
+/* Video fades in once it can render a frame; poster/fallback shows until then */
+.hero video.is-ready{ opacity: .88; }
 
-/* Once the video can render a frame, fade it in over the poster/fallback image */
-.hero video.is-ready{ opacity: .82; }
+/* Users who prefer reduced motion see only the still poster/fallback image */
+@media (prefers-reduced-motion: reduce){
+  .hero video{ display: none; }
+}
 
 .hero .container,
-.hero .container-fluid{
-  position: relative;
-  z-index: 2;
-}
-
-.kicker{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  font-weight: 600;
-  letter-spacing:.16em;
-  text-transform: uppercase;
-  font-size: .78rem;
-  color: rgba(255,255,255,.80);
-}
-.kicker-dot{
-  width:8px; height:8px; border-radius:50%;
-  background: linear-gradient(90deg, var(--mds-blue), var(--mds-teal));
-  box-shadow: 0 0 0 6px rgba(30,79,184,.18);
-}
+.hero .container-fluid{ position: relative; z-index: 2; }
 
 .hero h1{
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
-  font-size: clamp(2.05rem, 4.35vw, 3.55rem);
-  margin: 14px 0 14px;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  font-size: clamp(1.9rem, 4.2vw, 4rem);
+  margin: 1rem 0 1.25rem;
 }
+/* Keep the one-line headline on desktop; allow wrap on smaller screens */
+.hero-title{ white-space: nowrap; }
+@media (max-width: 991.98px){ .hero-title{ white-space: normal; } }
+
 .hero p.lead{
-  max-width: none;
-  width: 100%;
+  max-width: 56ch;
   margin-left: auto;
   margin-right: auto;
   color: rgba(255,255,255,.86);
   font-size: clamp(.98rem, 1.05vw, 1.18rem);
 }
 
-@media (min-width: 992px){
-  .hero p.lead{ white-space: nowrap; }
+/* =============================================================
+   7. COMPONENTS
+   ============================================================= */
+.btn{ border-radius: var(--mds-radius-sm); }
+
+.btn-primary{
+  border: none;
+  background: var(--mds-blue);
+  box-shadow: 0 4px 12px rgba(30,79,184,.18);
+}
+.btn-primary:hover{
+  background: var(--mds-blue-700);
+  filter: none;
+  box-shadow: 0 4px 12px rgba(30,79,184,.24);
 }
 
-.hero-card{
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: var(--mds-radius);
-  padding: 18px 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.20);
-  backdrop-filter: blur(10px);
-}
+.btn-outline-light{ border-color: rgba(255,255,255,.45); }
 
 .card-soft{
   border: 1px solid rgba(15, 35, 70, .10);
-  border-radius: var(--mds-radius);
-  box-shadow: 0 10px 30px rgba(10,20,35,.08);
+  border-radius: var(--mds-radius-lg);
+  box-shadow: 0 1px 2px rgba(10,20,35,.04), 0 4px 12px rgba(10,20,35,.06);
 }
-
 .card-dark{
-  background: linear-gradient(180deg, rgba(11,20,36,.96), rgba(11,20,36,.86));
+  background: var(--mds-surface);
   color: #fff;
-  border: 1px solid rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--mds-radius-lg);
 }
 
 .icon-pill{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display:inline-grid;
-  place-items:center;
-  background: linear-gradient(135deg, rgba(30,79,184,.14), rgba(26,166,168,.14));
-  border: 1px solid rgba(30,79,184,.18);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--mds-radius-sm);
+  display: inline-grid;
+  place-items: center;
+  background: rgba(30,79,184,.08);
+  border: 1px solid rgba(30,79,184,.16);
+  flex-shrink: 0;
 }
 
-.badge-ghost{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-  padding: .4rem .7rem;
-  border-radius: 999px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
-  color: rgba(255,255,255,.86);
-  font-size: .85rem;
+/* Chip: label-style tag for functions/levels on expertise page */
+.chip{
+  display: block;
+  padding: .5rem .85rem;
+  border-radius: 8px;
+  background: var(--mds-mist);
+  border: 1px solid rgba(10,20,35,.08);
+  font-weight: 500;
+  font-size: .9rem;
+  text-align: center;
+  color: var(--mds-text);
 }
 
-.hr-fade{
-  height:1px;
-  background: linear-gradient(90deg, transparent, rgba(10,20,35,.14), transparent);
-  border: 0;
+.notice{
+  border-radius: var(--mds-radius-lg);
+  background: var(--mds-mist);
+  border: 1px solid rgba(10,20,35,.08);
+  padding: 1.25rem;
 }
 
+/* =============================================================
+   8. PAGE HERO (sub-pages)
+   ============================================================= */
 .page-hero{
   padding-top: 120px;
   padding-bottom: 48px;
-  background:
-    radial-gradient(900px 520px at 10% 25%, rgba(30,79,184,.12), transparent 60%),
-    radial-gradient(800px 500px at 90% 65%, rgba(26,166,168,.10), transparent 55%),
-    linear-gradient(180deg, #ffffff, #f6f8fb);
+  background: var(--mds-mist);
   border-bottom: 1px solid rgba(10,20,35,.08);
 }
-
 .page-hero h1{
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
 }
 
-.footer{
-  background: #f6f8fb;
-  border-top: 1px solid rgba(10,20,35,.08);
-}
-.footer-link{
-  color: rgba(12,18,32,.70);
-  text-decoration: none;
-}
-.footer-link:hover{ color: rgba(12,18,32,.95); text-decoration: underline; }
-
+/* =============================================================
+   9. FORMS
+   ============================================================= */
 .form-control, .form-select{
-  border-radius: 14px;
+  border-radius: var(--mds-radius-sm);
   padding: .75rem .9rem;
   border-color: rgba(10,20,35,.14);
 }
@@ -253,26 +251,18 @@ body { color: #0c1220; background: #ffffff; }
   border-color: rgba(30,79,184,.35);
 }
 
-.notice{
-  border-radius: var(--mds-radius);
-  background: #fff;
-  border: 1px solid rgba(10,20,35,.10);
-  padding: 16px 16px;
-}
-
+/* =============================================================
+   10. JOB EMBED
+   ============================================================= */
 .job-embed{
   width: 100%;
-  /* Robust, responsive height:
-     - never collapses to a tiny box
-     - stays comfortable on desktop + mobile */
   height: clamp(680px, 85svh, 1100px);
   min-height: 680px;
   border: 1px solid rgba(15, 23, 42, .12);
-  border-radius: var(--mds-radius);
+  border-radius: var(--mds-radius-lg);
   overflow: hidden;
   background: #fff;
 }
-
 .jobs-embed-iframe{
   width: 100%;
   height: 100%;
@@ -280,95 +270,35 @@ body { color: #0c1220; background: #ffffff; }
   display: block;
 }
 
-/* Mobile / iPad tuning */
+/* =============================================================
+   11. FOOTER
+   ============================================================= */
+.footer{
+  background: var(--mds-mist);
+  border-top: 1px solid rgba(10,20,35,.08);
+}
+.footer-link{
+  color: rgba(12,18,32,.78);
+  text-decoration: none;
+}
+.footer-link:hover{ color: rgba(12,18,32,.95); text-decoration: underline; }
+
+/* =============================================================
+   12. MEDIA QUERIES
+   ============================================================= */
+@media (max-width: 991.98px){
+  .navbar{ padding-top: .50rem; padding-bottom: .50rem; }
+  .navbar-brand .brand-mark{ width: 40px; height: 40px; }
+  .section{ padding: 72px 0; }
+  .section-top-pad{ padding-top: 96px; }
+}
+
 @media (max-width: 992px){
-  .job-embed{
-    height: 88vh;
-    min-height: 680px;
-  }
+  .job-embed{ height: 88vh; min-height: 680px; }
 }
 @media (max-width: 576px){
-  .job-embed{
-    height: 92vh;
-    min-height: 620px;
-  }
+  .job-embed{ height: 92vh; min-height: 620px; }
 }
-
-
-.small-muted{ color: rgba(12,18,32,.70); font-size: .95rem; }
-
-
-
-
-/* Hero title row (logo next to headline) */
-.hero-title-row{
-  display:flex;
-  align-items:center;
-  gap: 18px;
-  margin-bottom: 14px;
-}
-
-.logo-badge{
-  background: rgba(255,255,255,.94);
-  border: 1px solid rgba(255,255,255,.65);
-  border-radius: 18px;
-  padding: 10px;
-  box-shadow: 0 14px 34px rgba(0,0,0,.28);
-  backdrop-filter: blur(4px);
-}
-
-.hero-logo-inline{
-  display:block;
-  width: 86px;
-  height: auto;
-}
-
-@media (max-width: 991.98px){
-  .hero-title-row{ flex-wrap: wrap; }
-  .hero-logo-inline{ width: 76px; }
-}
-
-@media (max-width: 420px){
-  .hero-title-row{ gap: 12px; }
-  .logo-badge{ padding: 8px; border-radius: 16px; }
-  .hero-logo-inline{ width: 68px; }
-}
-
-.hero-brand{
-  display:flex;
-  align-items:center;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.hero-logo{
-  width: clamp(76px, 9vw, 120px);
-  height: auto;
-  border-radius: 14px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
-  padding: 10px;
-  object-fit: contain;
-}
-
-@media (max-width: 420px){
-  .hero-brand{ flex-direction: column; align-items:flex-start; }
-  .hero-logo{ width: 96px; }
-}
-
-/* Keep the hero headline on one line on desktop; allow wrapping on smaller screens */
-.hero-title{ white-space: nowrap; }
-
-@media (max-width: 991.98px){
-  .hero-title{ white-space: normal; }
-}
-
-/* --- Jobs embed robustness (LOXO iframe) ---
-   Some devices show an in-iframe share/social rail that can overlap content.
-   We can't style inside the iframe, so we:
-   1) avoid cramped widths by switching the jobs layout to XL breakpoint in jobs.html
-   2) give the iframe ample height on common tablet sizes
-*/
 @media (min-width: 768px) and (max-width: 1199.98px){
   .job-embed{ height: 92vh; min-height: 820px; }
 }

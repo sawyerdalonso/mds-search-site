@@ -16,7 +16,7 @@
     });
   }
 
-  // AOS animations (optional)
+  // AOS animations
   if (window.AOS) {
     AOS.init({
       once: true,
@@ -30,4 +30,15 @@
   document.querySelectorAll("[data-year]").forEach(el => {
     el.textContent = new Date().getFullYear();
   });
+
+  // Fade hero video in once it can render a frame; poster/fallback shows until then
+  const heroVideo = document.querySelector(".hero-video");
+  if (heroVideo) {
+    const markReady = () => heroVideo.classList.add("is-ready");
+    if (heroVideo.readyState >= 2) {
+      markReady();
+    } else {
+      heroVideo.addEventListener("canplay", markReady, { once: true });
+    }
+  }
 })();

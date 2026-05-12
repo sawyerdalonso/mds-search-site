@@ -1,0 +1,7 @@
+{
+  "name": "mds-search-site",
+  "private": true,
+  "scripts": {
+    "start": "npx serve -p 3000 ."
+  }
+}
