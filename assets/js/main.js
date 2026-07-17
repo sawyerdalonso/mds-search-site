@@ -18,16 +18,6 @@
     });
   }
 
-  // AOS animations
-  if (window.AOS && !motionPreference.matches) {
-    AOS.init({
-      once: true,
-      duration: 650,
-      easing: "ease-out-cubic",
-      offset: 40
-    });
-  }
-
   // Set current year in any element that wants it
   document.querySelectorAll("[data-year]").forEach(el => {
     el.textContent = new Date().getFullYear();

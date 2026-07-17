@@ -14,7 +14,7 @@ The site is available at `http://localhost:3000`. Use this server when testing e
 
 - Top-level `.html` files — public pages plus `404.html` and the noindexed form success page, `thank-you.html`
 - `assets/css/styles.css` — custom design and responsive rules
-- `assets/js/main.js` — navigation, AOS, current year, and hero-video fallback behavior
+- `assets/js/main.js` — navigation, current year, and hero-video fallback behavior
 - `assets/img/` and `assets/video/` — brand and hero media
 - `_redirects` — Netlify clean-URL rewrites
 - `sitemap.xml` and `robots.txt` — search-engine discovery
@@ -29,3 +29,7 @@ ffmpeg -y -i source.mp4 -map 0:v:0 -vf crop=1920:1010:0:0,setsar=1 -c:v libx264 
 ```
 
 Preview the result on desktop and mobile before replacing the deployed asset.
+
+## Founder headshot
+
+The approved, optimized portrait is stored at `assets/img/team/howard-braithwaite.jpg`. Keep any original source locally under an ignored `*-original.*` filename; see `assets/img/team/README.md` for asset guidance.

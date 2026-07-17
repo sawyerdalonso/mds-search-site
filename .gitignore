@@ -1,0 +1,28 @@
+# Local dependencies and environment files
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Editor, OS and agent-local state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.agents/
+.codex/
+.claude/settings.local.json
+
+# Logs, caches and local review artifacts
+*.log
+.cache/
+.tmp/
+tmp/
+coverage/
+playwright-report/
+test-results/
+screenshots/
+review-*.js
+
+# Preserve local source photography without publishing it
+assets/img/team/*-original.*

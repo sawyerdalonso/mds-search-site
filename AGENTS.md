@@ -12,7 +12,7 @@ There is no template layer: navigation and footer markup is repeated in every pa
 - `python3 -m http.server 8080` — previews direct `.html` files but does not reproduce extensionless Netlify routes.
 - `git diff --check` — detects whitespace errors before committing.
 
-There is no compilation or production build step. Bootstrap, Bootstrap Icons, AOS, and Google Fonts are loaded from CDNs.
+There is no compilation or production build step. Bootstrap, Bootstrap Icons, and Google Fonts are loaded from CDNs.
 
 ## Coding Style & Naming Conventions
 
@@ -20,7 +20,7 @@ Follow the existing HTML style and use semantic elements, descriptive `alt` text
 
 ## Testing Guidelines
 
-No automated test suite or coverage target is configured. Manually preview every changed page at desktop and mobile widths. Verify navigation highlighting, clean URL routes, responsive menus, AOS effects, forms/links, hero-video fallback behavior, and browser-console errors. For shared navigation or footer changes, inspect every top-level HTML page.
+No automated test suite or coverage target is configured. Manually preview every changed page at desktop and mobile widths. Verify navigation highlighting, clean URL routes, responsive menus, visible below-fold content, forms/links, hero-video fallback behavior, and browser-console errors. For shared navigation or footer changes, inspect every top-level HTML page.
 
 ## Commit & Pull Request Guidelines
 

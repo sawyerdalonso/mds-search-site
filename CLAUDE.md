@@ -26,12 +26,11 @@ There are no tests, no linter, and no CI pipeline beyond Netlify's deploy previe
 
 **Styling:** `assets/css/styles.css` — a single flat stylesheet. CSS custom properties are defined at `:root` (`--mds-navy`, `--mds-blue`, `--mds-teal`, etc.). Bootstrap 5.3.3 is loaded via CDN and extended/overridden by `styles.css`.
 
-**JavaScript:** `assets/js/main.js` — one IIFE that handles: navbar glass effect on scroll, active nav link highlighting via `data-page` / `data-nav` attributes, AOS animation init, and dynamic year injection via `[data-year]`.
+**JavaScript:** `assets/js/main.js` — one IIFE that handles the navbar scroll state, active nav link highlighting via `data-page` / `data-nav`, dynamic year injection via `[data-year]`, and reduced-motion-aware hero video loading/fallback.
 
 **External dependencies (CDN only):**
 - Bootstrap 5.3.3 (CSS + JS bundle)
 - Bootstrap Icons 1.11.3
-- AOS 2.3.1 (scroll animations)
 - Inter font (Google Fonts)
 
 **Routing:** Netlify's `_redirects` file maps clean URLs (`/about` → `/about.html` with 200 rewrites). Internal links, canonical tags, and sitemap entries use extensionless URLs on `https://www.mdssearch.com`.
@@ -44,8 +43,6 @@ Active nav state is driven by `data-page` on `<body>` and `data-nav` on each `<a
 
 ## Animations
 
-Scroll-triggered animations use AOS. Add `data-aos="fade-up"` (or similar) and optionally `data-aos-delay="<ms>"` to any element. AOS is initialized in `main.js` with `once: true`, `duration: 650`.
-
 ## Hero Section
 
-The hero uses a looping `<video>` (`assets/video/hero.mp4`) with `assets/img/hero-fallback.jpg` as the poster. JavaScript attaches the video source only when reduced motion is not requested, attempts muted inline playback, and leaves the poster visible if playback fails or takes too long. Keep the video at 1080p H.264, silent, faststart-enabled, and below 8 MB. See `README.md` for the encode commands.
+The hero uses a looping `<video>` (`assets/video/hero.mp4`) with `assets/img/hero-fallback.jpg` as the poster. JavaScript attaches the video source only when reduced motion is not requested, attempts muted inline playback, and leaves the poster visible if playback fails or takes too long. Keep the video 1920 px wide in H.264, silent, faststart-enabled, cropped to remove the source black strip, and below 8 MB. See `README.md` for the encode commands.
