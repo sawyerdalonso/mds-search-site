@@ -25,7 +25,7 @@
 - **Styling:** single stylesheet `assets/css/styles.css` (~304 lines). CSS custom properties at `:root`. Bootstrap 5.3.3 loaded via CDN and overridden by this stylesheet.
 - **JS:** single IIFE `assets/js/main.js` — navbar scroll effect, active-nav highlighting via `data-page`/`data-nav`, dynamic year, reduced-motion-aware lazy hero loading, autoplay attempt, and clean fallback handling.
 - **Shared chrome:** navbar and footer are **duplicated inline in every page** (no templating). Editing them means editing all 10 files.
-- **CDN deps:** Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Inter font (Google Fonts). AOS was removed in the uncommitted redesign because fast scrolling could leave content hidden.
+- **CDN deps:** Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Inter font (Google Fonts). AOS was removed because fast scrolling could leave content hidden.
 
 ---
 
@@ -56,7 +56,7 @@ These were confirmed live, not assumed:
 3. **Restore the moving hero background by compressing the video** (target ~4–8 MB, ~1080p, H.264, no audio, faststart). Same look, far lighter.
 4. **Respect `prefers-reduced-motion`** — visitors with the OS "Reduce motion" setting see the polished still image; everyone else sees the video. But implement it *cleanly* (current code does `display:none` bluntly). NOTE: the user's own machine may have reduce-motion enabled, which likely explains why *they* see no movement — we should show them how to check/toggle it.
 5. **Design aesthetic = deliberately NO gradients.** The owner removed all gradients in commit `9f11fe1` specifically to kill the "AI-generated feel." All polish must honor this: solid colors, restrained shadows, real photography/iconography. **Forbidden:** gradients (except the two existing hero readability scrims), glassmorphism, purple/neon glows, emoji as icons, generic "AI-slop" styling. Goal: **professional, human, trustworthy — must not look AI-made.**
-6. **The market-facing redesign is recruiter-approved.** Keep its client-first hierarchy, visual system, founder positioning and rebuilt Home/Clients/Expertise/About/Contact pages. It remains uncommitted only because the approved headshot is still pending.
+6. **The market-facing redesign is recruiter-approved and live.** Keep its client-first hierarchy, visual system, founder positioning and rebuilt Home/Clients/Expertise/About/Contact pages.
 7. **Site must scale and look perfect on every device** (phones, tablets, desktop).
 8. **Use extensionless public URLs sitewide** (`/about`, `/contact`, etc.), including internal links, canonicals, and sitemap entries.
 9. **Attempt hero autoplay on mobile, then fall back cleanly to the still image on rejection/error.** Reduced-motion visitors still receive the still without attempting playback.
@@ -72,7 +72,7 @@ These were confirmed live, not assumed:
 
 ## FOUNDATION PASS CHECKLIST (resolved in the working tree)
 
-The items below describe the pre-pass defects retained for traceability. They have been implemented and validated locally but are not live until the user approves a commit/deployment.
+The items below describe the pre-pass defects retained for traceability. They were implemented, validated and deployed to production in July 2026.
 
 **Hero / video:**
 - Hero "no longer moves" — root cause is the new `prefers-reduced-motion → .hero video{display:none}` block (`styles.css:139-141`, added in `9f11fe1`) combined with the 51 MB file + `preload="metadata"` delaying/missing the `canplay` event that triggers the fade-in.
@@ -102,8 +102,8 @@ The items below describe the pre-pass defects retained for traceability. They ha
 
 ---
 
-## DELIVERABLE: "Proposed Upgrades" list (for recruiter approval — NOT implemented this pass)
-To be drafted as part of the work: a short list (≤8 items, one line each) of bolder appearance/credibility upgrades — e.g. testimonials/social proof, placement stats, professional photography, logo wall, case studies — for the recruiter to review before any implementation.
+## DELIVERABLE: "Proposed Upgrades" list (resolved through approved redesign)
+The approved redesign delivered the visual, positioning and founder-photography upgrades. Testimonials, client logos, placement statistics and case studies remain future options only when genuine source material is available and recruiter-approved.
 
 ---
 
@@ -132,9 +132,10 @@ _(Append newest entries at the bottom. Format: `YYYY-MM-DD — [Agent] — actio
 - 2026-07-17 — [GPT 5.6 Sol] — User clarified that Public Accounting should not receive special visual emphasis. Removed the blue-highlight styling and full-width treatment, then converted the Home and Expertise practice collections to centered wrapping layouts: four equal cards followed by three centered cards on desktop, two-column centered wrapping on tablets, and one column on phones. The five-card Expertise industry collection now also centers its final card. Browser geometry and screenshot review passed at 390/768/992/1200/1440 px with equal card backgrounds, exactly centered incomplete rows and zero overflow. Changes remain uncommitted and unpushed. Files touched: `index.html`, `expertise.html`, `assets/css/styles.css`, `SYNC.md`.
 - 2026-07-17 — [GPT 5.6 Sol] — User reported that the longer Tax, Assurance & Advisory descriptions still produced uneven card heights while resizing. Replaced the content-dependent wrapping layouts with explicit equal-track CSS grids while preserving the centered 4+3 desktop, centered 2+2+2+1 tablet and single-column phone arrangements; the 2+2+1 industry grid follows the same equal-height rule. Headless-browser measurement confirmed one identical rendered height for every card in each collection at 390/768/992/1200/1440 px, exact final-row centering and zero overflow. Screenshot review passed. Changes remain uncommitted and unpushed. Files touched: `assets/css/styles.css`, `SYNC.md`.
 - 2026-07-17 — [GPT 5.6 Sol] — Integrated the recruiter-approved founder portrait. Used the built-in image editing workflow for a conservative identity-preserving restoration (detail recovery, restrained noise reduction and exposure/color correction), then created a 1200×1200, 97 KB JPEG at `assets/img/team/howard-braithwaite.jpg`. Preserved the user upload locally as ignored `howard-braithwaite-original.png`. Replaced both HB monograms with responsive, accessible portrait panels and solid navy nameplates; updated asset documentation and ignore rules. Visual crop review passed on Home/About at 390/768/1440 px. A fresh 10-page × 6-width audit passed all 60 layouts with zero failures, including image loading and mobile navigation. Changes remain uncommitted and unpushed. Files touched: `index.html`, `about.html`, `assets/css/styles.css`, `.gitignore`, `README.md`, `assets/img/team/README.md`, `assets/img/team/howard-braithwaite.jpg`, `SYNC.md`.
+- 2026-07-17 — [Repository release] — Recruiter approved the complete redesign and founder portrait. Committed the approved work as `34cd4a0`, fast-forwarded `main` from `9f11fe1` through the foundation and redesign commits, and pushed `main` to GitHub. Verified production serves the new homepage headline, approved Retained + Contingency copy and `howard-braithwaite.jpg`. The redesign is live at `https://www.mdssearch.com`.
 
 ---
 
 ## >>> RESUME INSTRUCTION FOR A FUTURE AGENT <<<
 
-Read this entire file before acting, inspect the working tree and latest Activity Log, and preserve all locked decisions. The foundation commit is pushed on `review/foundation-polish`; `main` remains production. The recruiter-approved redesign, revisions and founder portrait are implemented and fully validated but deliberately uncommitted. Next, obtain the user's final visual approval, then commit and push the review branch only when the user explicitly asks.
+Read this entire file before acting, inspect the working tree and latest Activity Log, and preserve all locked decisions. The recruiter-approved foundation, redesign, requested copy revisions and founder portrait are deployed on `main` and live in production. Begin future work from the current `main`; use a review branch for substantive visual or positioning changes unless the user directs otherwise.
