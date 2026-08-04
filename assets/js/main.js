@@ -1,4 +1,19 @@
 (() => {
+  function initApollo() {
+    const cacheKey = Math.random().toString(36).substring(7);
+    const tracker = document.createElement("script");
+
+    tracker.src = `https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=${cacheKey}`;
+    tracker.async = true;
+    tracker.defer = true;
+    tracker.onload = () => {
+      window.trackingFunctions.onLoad({ appId: "6a56e0302cc63e001fd0caab" });
+    };
+    document.head.appendChild(tracker);
+  }
+
+  initApollo();
+
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   // Navbar glass effect on scroll
