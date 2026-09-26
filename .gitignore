@@ -5,7 +5,6 @@ node_modules/
 !.env.example
 
 # Editor, OS and agent-local state
-SYNC.md
 .DS_Store
 Thumbs.db
 .idea/
