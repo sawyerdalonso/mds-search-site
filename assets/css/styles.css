@@ -235,9 +235,36 @@ body:not([data-page="home"]) .navbar-glass{
 .hero-actions{ display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: 2rem; }
 .hero-actions .btn{ min-width: 156px; }
 .hero-note{ margin-top: 1.4rem; color: rgba(255,255,255,.68); font-size: .82rem; letter-spacing: .04em; }
-.hero-note-link{ margin-top: .5rem; }
-.hero-note-link a{ color: #fff; text-decoration: underline; text-underline-offset: 3px; }
-.hero-note-link a:hover{ color: rgba(255,255,255,.85); }
+/* Candidate route: a frosted pill keeps it legible over every video frame */
+.hero-candidate-link{
+  display: inline-flex;
+  gap: .4rem;
+  align-items: center;
+  margin-top: 1.1rem;
+  padding: .5rem 1rem;
+  color: #fff;
+  font-size: .84rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(6,12,22,.55);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.hero-candidate-link .long-label{ color: rgba(255,255,255,.72); font-weight: 500; }
+.hero-candidate-link .bi{ transition: transform .2s ease; }
+.hero-candidate-link:hover,
+.hero-candidate-link:focus-visible{ color: #fff; background: rgba(6,12,22,.78); border-color: rgba(255,255,255,.45); }
+.hero-candidate-link:hover .bi{ transform: translateX(3px); }
+.hero-candidate-link:focus-visible{ outline: 2px solid #fff; outline-offset: 3px; }
+.hero-candidate-link .short-label{ display: none; }
+@media (max-width: 575.98px){
+  .hero-candidate-link{ white-space: nowrap; }
+  .hero-candidate-link .long-label{ display: none; }
+  .hero-candidate-link .short-label{ display: inline; color: rgba(255,255,255,.72); font-weight: 500; }
+}
 
 .proof-bar{ background: var(--mds-surface); color: #fff; }
 .proof-item{ position: relative; padding: 1.4rem 1.25rem; }
@@ -262,6 +289,18 @@ body:not([data-page="home"]) .navbar-glass{
 }
 
 .btn-outline-light{ border-color: rgba(255,255,255,.45); }
+/* Brand the secondary outline button: Bootstrap's grey reads washed out on light surfaces */
+.btn-outline-secondary{
+  --bs-btn-color: var(--mds-navy);
+  --bs-btn-border-color: rgba(11,39,72,.35);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--mds-navy);
+  --bs-btn-hover-border-color: var(--mds-navy);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--mds-navy);
+  --bs-btn-active-border-color: var(--mds-navy);
+  --bs-btn-focus-shadow-rgb: 11,39,72;
+}
 .btn-light{ color: var(--mds-ink); background: #fff; border-color: #fff; }
 .btn-light:hover{ color: var(--mds-ink); background: #eef3f8; border-color: #eef3f8; }
 
@@ -740,13 +779,18 @@ body:not([data-page="home"]) .navbar-glass{
 
 .founder-linkedin{
   display: inline-flex;
-  gap: .45rem;
+  gap: .5rem;
   align-items: center;
+  padding: .55rem 1.1rem;
   color: #fff;
   font-size: .85rem;
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,.35);
-  padding-bottom: .15rem;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
-.founder-linkedin:hover{ color: #fff; border-bottom-color: #fff; }
+.founder-linkedin:hover,
+.founder-linkedin:focus-visible{ color: var(--mds-navy); background: #fff; border-color: #fff; }
+.founder-linkedin:focus-visible{ outline: 2px solid #fff; outline-offset: 3px; }
