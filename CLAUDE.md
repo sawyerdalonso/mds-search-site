@@ -16,7 +16,7 @@ npm start
 
 This serves `http://localhost:3000` and supports the site's extensionless public URLs. A basic Python static server can still open `.html` files directly but does not reproduce Netlify's clean-route rewrites.
 
-There are no tests, no linter, and no CI pipeline beyond Netlify's deploy preview.
+HTML is formatted with Prettier (`npm run format`, config in `.prettierrc.json`); run it before committing HTML changes. There are no tests and no CI pipeline beyond Netlify's deploy preview.
 
 ## Architecture
 
@@ -28,7 +28,9 @@ There are no tests, no linter, and no CI pipeline beyond Netlify's deploy previe
 
 **Cache busting:** Every page loads `/assets/css/styles.css?v=YYYYMMDD` (add a letter suffix for same-day changes) and `/assets/js/main.js?v=YYYYMMDD`. After changing either file, bump the `v=` value in all 10 HTML files so browsers and Cloudflare fetch the new version.
 
-**JavaScript:** `assets/js/main.js` — one IIFE that handles the navbar scroll state, active nav link highlighting via `data-page` / `data-nav`, dynamic year injection via `[data-year]`, and reduced-motion-aware hero video loading/fallback.
+**JavaScript:** `assets/js/main.js` — one IIFE that handles visitor-tracking consent (Apollo and Instantly), the navbar scroll state, active nav link highlighting via `data-page` / `data-nav`, dynamic year injection via `[data-year]`, and hero video loading/fallback.
+
+**Tracking consent:** Apollo and Instantly load only through `loadOptionalTracking()` in `main.js`, never via tags in the HTML. Visitors outside Europe get a notice with an opt-out; visitors whose browser time zone is European get an opt-in prompt; a Global Privacy Control signal disables tracking entirely. Keep `privacy.html` in sync with any change to this behavior.
 
 **External dependencies (CDN only):**
 - Bootstrap 5.3.3 (CSS + JS bundle)
@@ -37,14 +39,14 @@ There are no tests, no linter, and no CI pipeline beyond Netlify's deploy previe
 
 **Routing:** Netlify's `_redirects` file maps clean URLs (`/about` → `/about.html` with 200 rewrites). Internal links, canonical tags, and sitemap entries use extensionless URLs on `https://www.mdssearch.com`.
 
+**Headers:** `_headers` sets baseline security headers on Netlify. No Content-Security-Policy is set, because the trackers and the Loxo job-board embed load third-party scripts.
+
 **Forms:** `contact.html` and `candidates.html` use Netlify Forms and redirect successful submissions to `/thank-you`. Preserve their form names, hidden `form-name` inputs, and honeypots.
 
 ## Page–Nav Wiring
 
 Active nav state is driven by `data-page` on `<body>` and `data-nav` on each `<a>` in the navbar. When adding a new page, set `data-page="<slug>"` on `<body>` and ensure the corresponding nav link has `data-nav="<slug>"`.
 
-## Animations
-
 ## Hero Section
 
-The hero uses a looping `<video>` (`assets/video/hero.mp4`) with `assets/img/hero-fallback.jpg` as the poster. JavaScript attaches the video source only when reduced motion is not requested, attempts muted inline playback, and leaves the poster visible if playback fails or takes too long. Keep the video 1920 px wide in H.264, silent, faststart-enabled, cropped to remove the source black strip, and below 8 MB. See `README.md` for the encode commands.
+The hero uses a looping `<video>` (`assets/video/hero.mp4`) with `assets/img/hero-fallback.jpg` as the poster. JavaScript attaches the video source only on viewports 768 px and wider, when reduced motion is not requested and neither Data Saver nor a 2G connection is detected. It attempts muted inline playback and leaves the poster visible if playback fails or takes too long. Keep the video 1920 px wide in H.264, silent, faststart-enabled, cropped to remove the source black strip, and below 8 MB. See `README.md` for the encode commands.

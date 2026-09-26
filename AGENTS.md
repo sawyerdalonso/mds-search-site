@@ -12,13 +12,14 @@ There is no template layer: navigation and footer markup is repeated in every pa
 
 - `npm start` — serves the repository at `http://localhost:3000` using `npx serve`.
 - `python3 -m http.server 8080` — previews direct `.html` files but does not reproduce extensionless Netlify routes.
+- `npm run format` — formats all HTML pages with Prettier.
 - `git diff --check` — detects whitespace errors before committing.
 
 There is no compilation or production build step. Bootstrap, Bootstrap Icons, and Google Fonts are loaded from CDNs.
 
 ## Coding Style & Naming Conventions
 
-Follow the existing HTML style and use semantic elements, descriptive `alt` text, and appropriate ARIA labels. Use two-space indentation for new nested HTML, CSS, and JavaScript; preserve nearby formatting when editing existing compact markup. Name CSS classes in lowercase kebab-case (for example, `.navbar-glass`) and JavaScript variables/functions in camelCase. Reuse the CSS custom properties in `:root` instead of introducing duplicate colors or spacing values. Keep JavaScript dependency-free and compatible with the current IIFE structure.
+Follow the existing HTML style and use semantic elements, descriptive `alt` text, and appropriate ARIA labels. Use two-space indentation for new nested HTML, CSS, and JavaScript; keep the compact one-line rule style used in `styles.css`. Name CSS classes in lowercase kebab-case (for example, `.navbar-glass`) and JavaScript variables/functions in camelCase. Reuse the CSS custom properties in `:root` instead of introducing duplicate colors or spacing values. Keep JavaScript dependency-free and compatible with the current IIFE structure.
 
 ## Testing Guidelines
 

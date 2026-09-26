@@ -2,6 +2,8 @@
   "name": "mds-search-site",
   "private": true,
   "scripts": {
-    "start": "npx serve -p 3000 ."
-  }
+    "start": "npx serve -p 3000 .",
+    "format": "npx prettier@3 --write \"*.html\""
+  },
+  "description": "Marketing website for MDS Search, a founder-led executive search firm."
 }

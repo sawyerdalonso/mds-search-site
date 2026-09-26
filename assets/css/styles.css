@@ -40,22 +40,6 @@ a{ text-underline-offset: .18em; }
 .brand-name { letter-spacing: -.01em; font-weight: 700; }
 .brand-mark { filter: drop-shadow(0 4px 8px rgba(0,0,0,.14)); }
 
-.kicker{
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-size: .75rem;
-  color: rgba(255,255,255,.80);
-}
-.kicker-dot{
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--mds-teal);
-  flex-shrink: 0;
-}
-
 .small-muted { color: var(--mds-text-muted); font-size: .95rem; }
 .section-label{
   display: inline-flex;
@@ -324,30 +308,6 @@ body:not([data-page="home"]) .navbar-glass{
   border-radius: var(--mds-radius-lg);
 }
 
-.icon-pill{
-  width: 40px;
-  height: 40px;
-  border-radius: var(--mds-radius-sm);
-  display: inline-grid;
-  place-items: center;
-  background: rgba(30,79,184,.08);
-  border: 1px solid rgba(30,79,184,.16);
-  flex-shrink: 0;
-}
-
-/* Chip: label-style tag for functions/levels on expertise page */
-.chip{
-  display: block;
-  padding: .5rem .85rem;
-  border-radius: 8px;
-  background: var(--mds-mist);
-  border: 1px solid rgba(10,20,35,.08);
-  font-weight: 500;
-  font-size: .9rem;
-  text-align: center;
-  color: var(--mds-text);
-}
-
 .notice{
   border-radius: var(--mds-radius-lg);
   background: var(--mds-mist);
@@ -492,6 +452,56 @@ body:not([data-page="home"]) .navbar-glass{
 .contact-method{ display: flex; gap: 1rem; padding: 1.15rem 0; border-bottom: 1px solid rgba(10,30,55,.12); }
 .contact-method:first-child{ border-top: 1px solid rgba(10,30,55,.12); }
 .contact-method i{ color: var(--mds-blue); font-size: 1.1rem; }
+
+/* FAQ accordion (clients page) */
+.faq-list{ border-top: 1px solid rgba(10,30,55,.12); }
+.faq-item{ border-bottom: 1px solid rgba(10,30,55,.12); }
+.faq-item summary{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  color: var(--mds-ink);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker{ display: none; }
+.faq-item summary::after{
+  flex: none;
+  content: "+";
+  color: var(--mds-blue);
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1;
+}
+.faq-item[open] summary::after{ content: "\2212"; }
+.faq-item summary:focus-visible{ outline: 2px solid var(--mds-blue); outline-offset: 4px; border-radius: 4px; }
+.faq-item p{ margin: 0 0 1.4rem; color: var(--mds-text-muted); max-width: 68ch; }
+
+/* Contact page: what happens next */
+.next-steps ol{ padding-left: 1.15rem; }
+.next-steps li + li{ margin-top: .35rem; }
+
+/* Founder panel LinkedIn button */
+.founder-linkedin{
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  padding: .55rem 1.1rem;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.founder-linkedin:hover,
+.founder-linkedin:focus-visible{ color: var(--mds-navy); background: #fff; border-color: #fff; }
+.founder-linkedin:focus-visible{ outline: 2px solid #fff; outline-offset: 3px; }
 
 /* =============================================================
    8. PAGE HERO (sub-pages)
@@ -751,53 +761,3 @@ body:not([data-page="home"]) .navbar-glass{
   .privacy-consent__cancel,
   .privacy-consent__actions > :only-child{ grid-column: 1 / -1; }
 }
-
-/* =============================================================
-   FAQ
-   ============================================================= */
-.faq-list{ border-top: 1px solid rgba(10,30,55,.12); }
-.faq-item{ border-bottom: 1px solid rgba(10,30,55,.12); }
-.faq-item summary{
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 0;
-  color: var(--mds-ink);
-  font-weight: 600;
-  cursor: pointer;
-  list-style: none;
-}
-.faq-item summary::-webkit-details-marker{ display: none; }
-.faq-item summary::after{
-  flex: none;
-  content: "+";
-  color: var(--mds-blue);
-  font-size: 1.35rem;
-  font-weight: 500;
-  line-height: 1;
-}
-.faq-item[open] summary::after{ content: "\2212"; }
-.faq-item summary:focus-visible{ outline: 2px solid var(--mds-blue); outline-offset: 4px; border-radius: 4px; }
-.faq-item p{ margin: 0 0 1.4rem; color: var(--mds-text-muted); max-width: 68ch; }
-
-.next-steps ol{ padding-left: 1.15rem; }
-.next-steps li + li{ margin-top: .35rem; }
-
-.founder-linkedin{
-  display: inline-flex;
-  gap: .5rem;
-  align-items: center;
-  padding: .55rem 1.1rem;
-  color: #fff;
-  font-size: .85rem;
-  font-weight: 600;
-  text-decoration: none;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.55);
-  border-radius: 999px;
-  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
-}
-.founder-linkedin:hover,
-.founder-linkedin:focus-visible{ color: var(--mds-navy); background: #fff; border-color: #fff; }
-.founder-linkedin:focus-visible{ outline: 2px solid #fff; outline-offset: 3px; }
