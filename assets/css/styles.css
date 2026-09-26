@@ -737,3 +737,16 @@ body:not([data-page="home"]) .navbar-glass{
 
 .next-steps ol{ padding-left: 1.15rem; }
 .next-steps li + li{ margin-top: .35rem; }
+
+.founder-linkedin{
+  display: inline-flex;
+  gap: .45rem;
+  align-items: center;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  padding-bottom: .15rem;
+}
+.founder-linkedin:hover{ color: #fff; border-bottom-color: #fff; }
