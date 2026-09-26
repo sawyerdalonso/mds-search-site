@@ -1,10 +1,23 @@
 (() => {
   const consentKey = "mdsPrivacyConsent";
   const consentVersion = 1;
-  const consentLifetime = 180 * 24 * 60 * 60 * 1000;
+  const day = 24 * 60 * 60 * 1000;
+  const consentLifetime = 180 * day;
+  const optOutLifetime = 365 * day;
   let optionalTrackingLoaded = false;
 
   const hasGlobalPrivacyControl = () => navigator.globalPrivacyControl === true;
+
+  // US visitors get notice + opt-out. Visitors whose browser time zone places
+  // them in Europe (EEA/UK/Switzerland) keep the opt-in flow GDPR requires.
+  const requiresOptIn = (() => {
+    try {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      return /^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Azores|Faroe)$)/.test(timeZone);
+    } catch (error) {
+      return false;
+    }
+  })();
 
   function readConsent() {
     if (hasGlobalPrivacyControl()) {
@@ -14,7 +27,8 @@
     try {
       const consent = JSON.parse(window.localStorage.getItem(consentKey));
       const isCurrent = consent && consent.version === consentVersion;
-      const isFresh = isCurrent && Date.now() - consent.updatedAt < consentLifetime;
+      const lifetime = isCurrent && consent.optionalTracking === false ? optOutLifetime : consentLifetime;
+      const isFresh = isCurrent && Date.now() - consent.updatedAt < lifetime;
 
       return isFresh ? consent : null;
     } catch (error) {
@@ -22,11 +36,11 @@
     }
   }
 
-  function saveConsent(optionalTracking) {
+  function saveConsent(optionalTracking, source = "user") {
     try {
       window.localStorage.setItem(consentKey, JSON.stringify({
         optionalTracking,
-        source: "user",
+        source,
         updatedAt: Date.now(),
         version: consentVersion
       }));
@@ -85,6 +99,7 @@
     if (existingPanel) existingPanel.remove();
 
     const isManaging = options.isManaging === true;
+    const isNotice = options.isNotice === true;
     const trigger = options.trigger || null;
     const globalPrivacyControl = hasGlobalPrivacyControl();
     const panel = document.createElement("section");
@@ -105,10 +120,16 @@
     eyebrow.className = "privacy-consent__eyebrow";
     eyebrow.textContent = "Privacy choices";
     heading.id = "privacy-consent-title";
-    heading.textContent = globalPrivacyControl ? "Optional tracking is off" : "Your privacy, your choice";
-    description.textContent = globalPrivacyControl
-      ? "Your browser is sending a Global Privacy Control signal, so Apollo and Instantly visitor tracking will remain disabled."
-      : "Optional visitor analytics help us understand interest in our services and support relevant outreach. The site and forms work without them.";
+    if (globalPrivacyControl) {
+      heading.textContent = "Optional tracking is off";
+      description.textContent = "Your browser is sending a Global Privacy Control signal, so Apollo and Instantly visitor tracking will remain disabled.";
+    } else if (isNotice) {
+      heading.textContent = "A note on privacy";
+      description.textContent = "We use Apollo and Instantly visitor analytics to understand interest in our services and support relevant business outreach. You can opt out at any time.";
+    } else {
+      heading.textContent = "Your privacy, your choice";
+      description.textContent = "Optional visitor analytics help us understand interest in our services and support relevant outreach. The site and forms work without them.";
+    }
     policyLink.href = "/privacy";
     policyLink.textContent = "Read our privacy policy";
     actions.className = "privacy-consent__actions";
@@ -130,16 +151,16 @@
 
       acceptButton.className = "privacy-consent__button privacy-consent__button--primary";
       acceptButton.type = "button";
-      acceptButton.textContent = "Allow optional tracking";
+      acceptButton.textContent = isNotice ? "Got it" : "Allow optional tracking";
       acceptButton.addEventListener("click", () => {
-        saveConsent(true);
+        saveConsent(true, isNotice ? "notice" : "user");
         closeConsentPanel();
         loadOptionalTracking();
       });
 
       necessaryButton.className = "privacy-consent__button privacy-consent__button--secondary";
       necessaryButton.type = "button";
-      necessaryButton.textContent = "Necessary only";
+      necessaryButton.textContent = requiresOptIn ? "Necessary only" : "Opt out";
       necessaryButton.addEventListener("click", () => {
         const shouldReload = optionalTrackingLoaded;
         saveConsent(false);
@@ -188,8 +209,11 @@
   const consent = readConsent();
   if (consent && consent.optionalTracking) {
     loadOptionalTracking();
-  } else if (!consent) {
+  } else if (!consent && requiresOptIn) {
     showConsentPanel();
+  } else if (!consent) {
+    loadOptionalTracking();
+    showConsentPanel({ isNotice: true });
   }
 
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
