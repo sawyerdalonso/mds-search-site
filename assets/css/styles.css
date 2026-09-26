@@ -17,6 +17,11 @@
   --mds-radius-sm: 10px;
   --mds-radius-md: 14px;
   --mds-radius-lg: 18px;
+  /* Brand Bootstrap's default link blue */
+  --bs-link-color: #1849ad;
+  --bs-link-color-rgb: 24,73,173;
+  --bs-link-hover-color: #0b2748;
+  --bs-link-hover-color-rgb: 11,39,72;
 }
 
 /* =============================================================
@@ -99,12 +104,9 @@ a{ text-underline-offset: .18em; }
 .navbar-brand .brand-mark{
   width: 44px;
   height: 44px;
-  border-radius: 10px;
-  padding: 3px;
   object-fit: contain;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,.18);
 }
+.footer-mark{ width: 48px; height: 48px; object-fit: contain; }
 
 .navbar-glass{
   transition: background-color .25s ease, box-shadow .25s ease;
@@ -186,6 +188,11 @@ body:not([data-page="home"]) .navbar-glass{
 /* Video fades in once it can render a frame; poster/fallback shows until then */
 .hero-video.is-ready{ opacity: .84; }
 .hero-video.is-fallback{ display: none; }
+
+/* Phones get the still image: faster on cellular, and the video's detail is lost at that size */
+@media (max-width: 767.98px){
+  .hero-video{ display: none; }
+}
 
 /* Users who prefer reduced motion see only the still poster/fallback image */
 @media (prefers-reduced-motion: reduce){

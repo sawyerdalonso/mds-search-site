@@ -6,7 +6,7 @@ This repository is a static marketing site deployed on Netlify. Top-level HTML f
 
 There is no template layer: navigation and footer markup is repeated in every page. Update all relevant HTML files when changing shared page chrome. Keep each page's `<body data-page="...">` value aligned with its navigation link's `data-nav` value.
 
-**Cache busting:** Every page loads `/assets/css/styles.css?v=YYYYMMDD` and `/assets/js/main.js?v=YYYYMMDD`. After changing either file, bump the `v=` value in all 10 HTML files so browsers and Cloudflare fetch the new version.
+**Cache busting:** Every page loads `/assets/css/styles.css?v=YYYYMMDD` (add a letter suffix for same-day changes) and `/assets/js/main.js?v=YYYYMMDD`. After changing either file, bump the `v=` value in all 10 HTML files so browsers and Cloudflare fetch the new version.
 
 ## Build, Test, and Development Commands
 

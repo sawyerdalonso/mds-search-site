@@ -26,7 +26,7 @@ There are no tests, no linter, and no CI pipeline beyond Netlify's deploy previe
 
 **Styling:** `assets/css/styles.css` — a single flat stylesheet. CSS custom properties are defined at `:root` (`--mds-navy`, `--mds-blue`, `--mds-teal`, etc.). Bootstrap 5.3.3 is loaded via CDN and extended/overridden by `styles.css`.
 
-**Cache busting:** Every page loads `/assets/css/styles.css?v=YYYYMMDD` and `/assets/js/main.js?v=YYYYMMDD`. After changing either file, bump the `v=` value in all 10 HTML files so browsers and Cloudflare fetch the new version.
+**Cache busting:** Every page loads `/assets/css/styles.css?v=YYYYMMDD` (add a letter suffix for same-day changes) and `/assets/js/main.js?v=YYYYMMDD`. After changing either file, bump the `v=` value in all 10 HTML files so browsers and Cloudflare fetch the new version.
 
 **JavaScript:** `assets/js/main.js` — one IIFE that handles the navbar scroll state, active nav link highlighting via `data-page` / `data-nav`, dynamic year injection via `[data-year]`, and reduced-motion-aware hero video loading/fallback.
 

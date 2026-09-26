@@ -217,6 +217,16 @@
   }
 
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const phoneViewport = window.matchMedia("(max-width: 767.98px)");
+
+  // Phones, Data Saver and very slow connections get the still hero image instead of ~6 MB of video.
+  const prefersStillHero = () => {
+    const connection = navigator.connection || {};
+    return motionPreference.matches
+      || phoneViewport.matches
+      || connection.saveData === true
+      || /(^|-)2g$/.test(connection.effectiveType || "");
+  };
 
   // Navbar glass effect on scroll
   const nav = document.querySelector(".navbar-glass");
@@ -240,8 +250,8 @@
     el.textContent = new Date().getFullYear();
   });
 
-  // Load the hero video only when motion is allowed. If mobile autoplay or
-  // loading fails, remove the video cleanly and leave the CSS poster visible.
+  // Load the hero video only when motion is allowed and the device suits it. If
+  // autoplay or loading fails, remove the video cleanly and leave the CSS poster visible.
   const heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
     const source = heroVideo.querySelector("source[data-src]");
@@ -264,7 +274,7 @@
       heroVideo.classList.add("is-ready");
     };
     const startVideo = () => {
-      if (motionPreference.matches || !source) {
+      if (prefersStillHero() || !source) {
         showFallback();
         return;
       }
@@ -282,15 +292,14 @@
     heroVideo.addEventListener("error", showFallback);
     if (source) source.addEventListener("error", showFallback);
 
-    const onMotionChange = () => {
-      if (motionPreference.matches) showFallback();
-      else startVideo();
+    const onPreferenceChange = () => {
+      if (prefersStillHero()) showFallback();
+      else if (!heroVideo.classList.contains("is-ready")) startVideo();
     };
-    if (motionPreference.addEventListener) {
-      motionPreference.addEventListener("change", onMotionChange);
-    } else {
-      motionPreference.addListener(onMotionChange);
-    }
+    [motionPreference, phoneViewport].forEach(query => {
+      if (query.addEventListener) query.addEventListener("change", onPreferenceChange);
+      else query.addListener(onPreferenceChange);
+    });
 
     startVideo();
   }
