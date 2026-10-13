@@ -180,6 +180,13 @@
       }
     }
 
+    if (isManaging || globalPrivacyControl) {
+      // Escape dismisses the panel without changing the stored choice.
+      panel.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeConsentPanel(trigger);
+      });
+    }
+
     document.body.appendChild(panel);
     const firstButton = panel.querySelector("button");
     if (isManaging && firstButton) firstButton.focus();
