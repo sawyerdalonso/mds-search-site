@@ -403,18 +403,6 @@ body:not([data-page="home"]) .navbar-glass{
 .plain-point{ padding-top: 1rem; border-top: 2px solid var(--mds-navy); }
 .plain-point h3{ margin-bottom: .4rem; font-size: 1.05rem; }
 .plain-point p{ margin: 0; color: var(--mds-text-muted); }
-.industry-grid{
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 1fr;
-  gap: 1.5rem;
-}
-.industry-grid .service-card:nth-child(1){ grid-area: 1 / 1 / 2 / 3; }
-.industry-grid .service-card:nth-child(2){ grid-area: 1 / 3 / 2 / 5; }
-.industry-grid .service-card:nth-child(3){ grid-area: 2 / 1 / 3 / 3; }
-.industry-grid .service-card:nth-child(4){ grid-area: 2 / 3 / 3 / 5; }
-.industry-grid .service-card:nth-child(5){ grid-area: 3 / 2 / 4 / 4; }
-
 .role-cloud{ display: flex; flex-wrap: wrap; gap: .6rem; }
 .role-cloud span{
   padding: .6rem .8rem;
@@ -758,8 +746,6 @@ body:not([data-page="home"]) .navbar-glass{
   .founder-copy{ padding: 2rem 1.25rem; }
   .cta-panel{ margin-left: -.25rem; margin-right: -.25rem; border-radius: var(--mds-radius-md); }
   .practice-list .practice-item{ grid-template-columns: 1fr; gap: .25rem; }
-  .industry-grid{ grid-template-columns: 1fr; }
-  .industry-grid .service-card:nth-child(n){ grid-area: auto; }
   .privacy-consent{
     bottom: max(.75rem, env(safe-area-inset-bottom));
     width: calc(100% - 1rem);
