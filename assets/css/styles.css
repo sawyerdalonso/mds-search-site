@@ -416,6 +416,7 @@ body:not([data-page="home"]) .navbar-glass{
 
 .founder-panel{ overflow: hidden; background: var(--mds-warm); border: 1px solid rgba(10,30,55,.10); border-radius: var(--mds-radius-lg); }
 .founder-copy{ padding: clamp(2rem, 5vw, 4.5rem); }
+.founder-signoff{ margin-top: 1.25rem; color: var(--mds-ink); font-weight: 600; }
 .founder-mark{
   display: grid;
   min-height: 100%;
