@@ -618,57 +618,49 @@ body:not([data-page="home"]) .navbar-glass{
   position: fixed;
   z-index: 2000;
   left: 50%;
-  bottom: max(1.25rem, env(safe-area-inset-bottom));
-  width: min(780px, calc(100% - 2rem));
+  bottom: max(.75rem, env(safe-area-inset-bottom));
+  width: min(640px, calc(100% - 1rem));
   transform: translateX(-50%);
   color: #fff;
   background: var(--mds-surface);
   border: 1px solid rgba(255,255,255,.16);
-  border-radius: var(--mds-radius-lg);
-  box-shadow: 0 24px 64px rgba(3,12,24,.32);
+  border-radius: var(--mds-radius-md);
+  box-shadow: 0 12px 32px rgba(3,12,24,.3);
 }
+/* A compact bar: one short sentence beside two buttons */
 .privacy-consent__inner{
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 250px);
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem;
+  gap: .5rem 1rem;
+  padding: .8rem 1rem;
 }
-.privacy-consent__eyebrow{
-  margin-bottom: .35rem;
-  color: #9cbcff;
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.privacy-consent h2{
-  margin: 0 0 .45rem;
-  color: #fff;
-  font-size: 1.15rem;
-  letter-spacing: -.01em;
-}
+.privacy-consent__eyebrow{ display: none; }
 .privacy-consent p{
-  margin: 0 0 .45rem;
-  color: rgba(255,255,255,.78);
-  font-size: .88rem;
-  line-height: 1.55;
+  display: inline;
+  margin: 0 .35rem 0 0;
+  color: rgba(255,255,255,.86);
+  font-size: .82rem;
+  line-height: 1.5;
 }
 .privacy-consent a{
   color: #fff;
-  font-size: .82rem;
+  font-size: .8rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 .privacy-consent__actions{
-  display: grid;
-  gap: .6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  justify-content: flex-end;
 }
 .privacy-consent__button{
-  min-height: 44px;
-  padding: .65rem .9rem;
+  min-height: 40px;
+  padding: .45rem .85rem;
   border: 1px solid transparent;
   border-radius: var(--mds-radius-sm);
-  font-size: .82rem;
+  font-size: .8rem;
   font-weight: 700;
   line-height: 1.2;
   cursor: pointer;
@@ -686,11 +678,13 @@ body:not([data-page="home"]) .navbar-glass{
 }
 .privacy-consent__button--secondary:hover{ background: var(--mds-mist); border-color: var(--mds-mist); }
 .privacy-consent__cancel{
+  flex-basis: 100%;
   padding: .2rem;
   color: rgba(255,255,255,.78);
   background: transparent;
   border: 0;
   font-size: .78rem;
+  text-align: right;
   text-decoration: underline;
   text-underline-offset: .18em;
   cursor: pointer;
@@ -751,23 +745,7 @@ body:not([data-page="home"]) .navbar-glass{
   .founder-copy{ padding: 2rem 1.25rem; }
   .cta-panel{ margin-left: -.25rem; margin-right: -.25rem; border-radius: var(--mds-radius-md); }
   .practice-list .practice-item{ grid-template-columns: 1fr; gap: .25rem; }
-  .privacy-consent{
-    bottom: max(.75rem, env(safe-area-inset-bottom));
-    width: calc(100% - 1rem);
-    max-height: calc(100svh - 1.5rem);
-    overflow-y: auto;
-    border-radius: var(--mds-radius-md);
-  }
-  .privacy-consent__inner{
-    grid-template-columns: 1fr;
-    gap: .85rem;
-    padding: 1rem;
-  }
-  .privacy-consent__eyebrow{ display: none; }
-  .privacy-consent h2{ font-size: 1.05rem; }
-  .privacy-consent p{ font-size: .82rem; line-height: 1.45; }
-  .privacy-consent__actions{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .privacy-consent__button{ min-height: 52px; padding: .55rem .65rem; }
-  .privacy-consent__cancel,
-  .privacy-consent__actions > :only-child{ grid-column: 1 / -1; }
+  .privacy-consent__inner{ grid-template-columns: 1fr; gap: .6rem; }
+  .privacy-consent__actions{ justify-content: stretch; }
+  .privacy-consent__button{ flex: 1 1 0; min-height: 44px; }
 }

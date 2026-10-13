@@ -126,18 +126,19 @@
     eyebrow.className = "privacy-consent__eyebrow";
     eyebrow.textContent = "Privacy choices";
     heading.id = "privacy-consent-title";
+    heading.className = "visually-hidden";
     if (globalPrivacyControl) {
       heading.textContent = "Optional tracking is off";
       description.textContent = "Your browser is sending a Global Privacy Control signal, so Apollo and Instantly visitor tracking will remain disabled.";
     } else if (isNotice) {
       heading.textContent = "A note on privacy";
-      description.textContent = "We use Apollo and Instantly visitor analytics to understand interest in our services and support relevant business outreach. You can opt out at any time.";
+      description.textContent = "We use Apollo and Instantly on this site to identify which companies visit and to support business outreach. You can opt out at any time.";
     } else {
       heading.textContent = "Your privacy, your choice";
-      description.textContent = "Optional visitor analytics help us understand interest in our services and support relevant outreach. The site and forms work without them.";
+      description.textContent = "May we use Apollo and Instantly to identify which companies visit and to support business outreach? The site and forms work fully without them.";
     }
     policyLink.href = "/privacy";
-    policyLink.textContent = "Read our privacy policy";
+    policyLink.textContent = "Privacy policy";
     actions.className = "privacy-consent__actions";
 
     copy.append(eyebrow, heading, description, policyLink);
