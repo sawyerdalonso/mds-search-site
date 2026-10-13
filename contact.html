@@ -82,7 +82,7 @@
             <li class="nav-item"><a class="nav-link" data-nav="candidates" href="/candidates">Candidates</a></li>
             <li class="nav-item"><a class="nav-link" data-nav="jobs" href="/jobs">Jobs</a></li>
             <li class="nav-item">
-              <a aria-current="page" class="nav-link active" data-nav="contact" href="/contact">Contact</a>
+              <a aria-current="page" class="nav-link active" data-nav="contact" href="/contact">Start a search</a>
             </li>
           </ul>
         </div>
@@ -109,7 +109,7 @@
       <section class="section">
         <div class="container">
           <div class="row g-5">
-            <div class="col-lg-5">
+            <div class="col-lg-5 order-2 order-lg-1">
               <h2 class="display-heading mb-3">Your first conversation is with Howard.</h2>
               <p class="section-copy small-muted mb-4">
                 Whether you are scoping a search or pressure-testing the market, start with the context. We’ll take it
@@ -174,11 +174,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-7 order-1 order-lg-2">
               <!-- Netlify Forms -->
               <form
                 action="/thank-you"
-                class="card card-soft"
+                class="form-panel"
                 data-netlify="true"
                 method="POST"
                 name="contact"
@@ -188,7 +188,7 @@
                 <p class="d-none">
                   <label>Don’t fill this out: <input type="text" name="bot-field" /></label>
                 </p>
-                <div class="card-body p-4 p-lg-5">
+                <div>
                   <h2 class="h2 mb-2">What do you need to hire?</h2>
                   <p class="small-muted mb-4">A short description is enough to begin.</p>
                   <div class="row g-3">
