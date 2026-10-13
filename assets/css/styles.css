@@ -341,6 +341,10 @@ body:not([data-page="home"]) .navbar-glass{
   border-radius: var(--mds-radius-lg);
 }
 
+/* Plain bordered panels for forms and side notes (no card shadow) */
+.form-panel{ padding: clamp(1.25rem, 3vw, 2rem); background: #fff; border: 1px solid rgba(10,30,55,.14); border-radius: var(--mds-radius-md); }
+.side-note{ padding: 1.5rem; background: var(--mds-mist); border-left: 3px solid var(--mds-navy); }
+
 .notice{
   border-radius: var(--mds-radius-lg);
   background: var(--mds-mist);
