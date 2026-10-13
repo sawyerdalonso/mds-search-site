@@ -350,13 +350,9 @@ body:not([data-page="home"]) .navbar-glass{
 
 .feature-list{ border-top: 1px solid rgba(10,30,55,.14); }
 .feature-row{
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 1.25rem;
-  padding: 1.65rem 0;
+  padding: 1.5rem 0;
   border-bottom: 1px solid rgba(10,30,55,.14);
 }
-.feature-number{ color: var(--mds-blue); font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
 .feature-row h3{ margin-bottom: .35rem; font-size: 1.15rem; }
 .feature-row p{ margin: 0; color: var(--mds-text-muted); }
 
@@ -758,7 +754,6 @@ body:not([data-page="home"]) .navbar-glass{
   .job-embed{ height: 82svh; min-height: 560px; }
   .display-heading{ font-size: clamp(2rem, 9vw, 3.2rem); }
   .proof-item{ text-align: center; }
-  .feature-row{ grid-template-columns: 42px 1fr; gap: .75rem; }
   .process-step::before{ margin-bottom: 1.5rem; }
   .founder-mark{ min-height: 360px; }
   .founder-mark.founder-photo-panel{ min-height: 480px; }
