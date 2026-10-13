@@ -453,7 +453,7 @@ body:not([data-page="home"]) .navbar-glass{
 
 .cta-panel{ padding: clamp(2.1rem, 6vw, 4.5rem); background: var(--mds-blue); border-radius: var(--mds-radius-lg); color: #fff; }
 .cta-panel h2{ max-width: 17ch; color: #fff; font-size: clamp(2rem, 4vw, 3.7rem); line-height: 1.05; }
-.cta-panel p{ color: rgba(255,255,255,.76); }
+.cta-panel p{ color: rgba(255,255,255,.92); }
 
 .service-card{ height: 100%; padding: 2rem; border: 1px solid rgba(10,30,55,.12); border-radius: var(--mds-radius-md); background: #fff; }
 .service-card.featured{ color: #fff; background: var(--mds-navy); border-color: var(--mds-navy); }
