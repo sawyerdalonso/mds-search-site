@@ -585,9 +585,13 @@ body:not([data-page="home"]) .navbar-glass{
   border-top: 0;
 }
 .footer-link{
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
   color: rgba(12,18,32,.78);
   text-decoration: none;
 }
+.footer ul.list-unstyled li + li{ margin-top: .1rem; }
 .footer-link:hover{ color: rgba(12,18,32,.95); text-decoration: underline; }
 .privacy-choices-link{
   appearance: none;
