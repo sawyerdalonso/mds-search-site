@@ -60,6 +60,15 @@ ffmpeg -y -i source.mp4 -map 0:v:0 -vf crop=1920:1010:0:0,setsar=1 -c:v libx264 
 ffmpeg -y -i source.mp4 -map 0:v:0 -vf crop=1920:1010:0:0,setsar=1 -c:v libx264 -preset slow -b:v 2100k -maxrate 2600k -bufsize 5200k -pix_fmt yuv420p -map_metadata -1 -movflags +faststart -an -pass 2 -passlogfile /tmp/mds-hero-pass assets/video/hero.mp4
 ```
 
+`assets/video/hero.webm` (VP9, about 2 MB) is listed first so Chrome, Edge and Firefox download it instead of the MP4; Safari uses the MP4. Encode it from the same source:
+
+```bash
+ffmpeg -y -i source.mp4 -map 0:v:0 -vf crop=1920:1010:0:0,setsar=1 -c:v libvpx-vp9 -b:v 700k -maxrate 1000k -minrate 300k -row-mt 1 -deadline good -cpu-used 2 -an -pass 1 -passlogfile /tmp/mds-hero-vp9 -f null /dev/null
+ffmpeg -y -i source.mp4 -map 0:v:0 -vf crop=1920:1010:0:0,setsar=1 -c:v libvpx-vp9 -b:v 700k -maxrate 1000k -minrate 300k -row-mt 1 -deadline good -cpu-used 2 -an -map_metadata -1 -pass 2 -passlogfile /tmp/mds-hero-vp9 assets/video/hero.webm
+```
+
+The original 51 MB source is in Git history: `git show 50ba22a:assets/video/hero.mp4 > source.mp4`.
+
 **Logo.** `assets/img/logo-white.png` is the full-resolution master. The tightly cropped marks (`logo-mark*.png`), touch icon and favicons are derived from it.
 
 **Founder portrait.** See `assets/img/team/README.md`.

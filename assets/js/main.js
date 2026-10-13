@@ -264,7 +264,9 @@
   // real load/decode error removes the video.
   const heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
-    const source = heroVideo.querySelector("source[data-src]");
+    // WebM first for Chrome, Edge and Firefox; MP4 after it for Safari.
+    const sources = [...heroVideo.querySelectorAll("source[data-src]")];
+    const hasSource = () => sources.some(source => source.hasAttribute("src"));
     const gestureEvents = ["click", "keydown", "touchend"];
 
     const stopGestureRetry = () => {
@@ -286,7 +288,7 @@
     };
     const retryOnGesture = () => {
       stopGestureRetry();
-      if (!prefersStillHero() && heroVideo.paused && source && source.hasAttribute("src")) {
+      if (!prefersStillHero() && heroVideo.paused && hasSource()) {
         playVideo();
       }
     };
@@ -295,8 +297,8 @@
       heroVideo.classList.remove("is-ready");
       heroVideo.classList.add("is-fallback");
       heroVideo.pause();
-      if (source && source.hasAttribute("src")) {
-        source.removeAttribute("src");
+      if (hasSource()) {
+        sources.forEach(source => source.removeAttribute("src"));
         heroVideo.load();
       }
     };
@@ -306,20 +308,21 @@
       heroVideo.classList.add("is-ready");
     };
     const startVideo = () => {
-      if (prefersStillHero() || !source) {
+      if (prefersStillHero() || !sources.length) {
         showFallback();
         return;
       }
 
       heroVideo.classList.remove("is-fallback", "is-ready");
-      source.setAttribute("src", source.dataset.src);
+      sources.forEach(source => source.setAttribute("src", source.dataset.src));
       heroVideo.load();
       playVideo();
     };
 
     heroVideo.addEventListener("playing", markReady);
     heroVideo.addEventListener("error", showFallback);
-    if (source) source.addEventListener("error", showFallback);
+    // A <source> error only means that format failed; fall back after the last one.
+    if (sources.length) sources[sources.length - 1].addEventListener("error", showFallback);
 
     const onPreferenceChange = () => {
       if (prefersStillHero()) showFallback();
