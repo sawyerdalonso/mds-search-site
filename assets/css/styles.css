@@ -54,6 +54,9 @@ main :focus-visible,
 .brand-name { letter-spacing: -.01em; font-weight: 700; }
 .brand-mark { filter: drop-shadow(0 4px 8px rgba(0,0,0,.14)); }
 
+/* Inline SVG icons from assets/img/icons.svg (sized and coloured like text) */
+.bi{ display: inline-block; flex-shrink: 0; width: 1em; height: 1em; fill: currentColor; vertical-align: -.125em; }
+
 .small-muted { color: var(--mds-text-muted); font-size: .95rem; }
 .section-label{
   display: inline-flex;
@@ -452,7 +455,7 @@ body:not([data-page="home"]) .navbar-glass{
 
 .contact-method{ display: flex; gap: 1rem; padding: 1.15rem 0; border-bottom: 1px solid rgba(10,30,55,.12); }
 .contact-method:first-child{ border-top: 1px solid rgba(10,30,55,.12); }
-.contact-method i{ color: var(--mds-blue); font-size: 1.1rem; }
+.contact-method .bi{ color: var(--mds-blue); font-size: 1.1rem; margin-top: .2rem; }
 
 /* FAQ accordion (clients page) */
 .faq-list{ border-top: 1px solid rgba(10,30,55,.12); }
