@@ -194,8 +194,10 @@ body:not([data-page="home"]) .navbar-glass{
 
 /* Users who prefer reduced motion see only the still poster/fallback image */
 @media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
   .hero-video{ display: none; }
-  .navbar-glass{ transition: none !important; }
+  *, *::before, *::after{ transition: none !important; animation: none !important; }
+  .btn:hover{ transform: none; }
 }
 
 .hero .container,
