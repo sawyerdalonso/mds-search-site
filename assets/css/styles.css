@@ -191,6 +191,9 @@ body:not([data-page="home"]) .navbar-glass{
   background:
     linear-gradient(180deg, rgba(7,16,24,.55), rgba(7,16,24,.70)),
     url("../img/hero-fallback.jpg");
+  background-image:
+    linear-gradient(180deg, rgba(7,16,24,.55), rgba(7,16,24,.70)),
+    image-set(url("../img/hero-fallback.webp") type("image/webp"), url("../img/hero-fallback.jpg") type("image/jpeg"));
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -749,6 +752,9 @@ body:not([data-page="home"]) .navbar-glass{
 @media (max-width: 767.98px){
   .hero{
     min-height: 84svh;
+    background-image:
+      linear-gradient(180deg, rgba(7,16,24,.55), rgba(7,16,24,.70)),
+      image-set(url("../img/hero-fallback-900.webp") type("image/webp"), url("../img/hero-fallback-900.jpg") type("image/jpeg"));
   }
   .section{ padding: 64px 0; }
   .section-tight{ padding: 52px 0; }

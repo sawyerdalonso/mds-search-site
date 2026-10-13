@@ -121,15 +121,24 @@
               <div class="col-lg-5">
                 <div class="founder-mark founder-photo-panel">
                   <div class="founder-photo-frame">
-                    <img
-                      alt="Howard Braithwaite, Founder of MDS Search"
-                      class="founder-photo"
-                      decoding="async"
-                      height="1200"
-                      loading="lazy"
-                      src="assets/img/team/howard-braithwaite.jpg"
-                      width="1200"
-                    />
+                    <picture>
+                      <source
+                        sizes="(min-width: 576px) 360px, 78vw"
+                        srcset="assets/img/team/howard-braithwaite-400.webp 400w, assets/img/team/howard-braithwaite-720.webp 720w, assets/img/team/howard-braithwaite.webp 1200w"
+                        type="image/webp"
+                      />
+                      <img
+                        alt="Howard Braithwaite, Founder of MDS Search"
+                        class="founder-photo"
+                        decoding="async"
+                        height="1200"
+                        loading="lazy"
+                        sizes="(min-width: 576px) 360px, 78vw"
+                        src="assets/img/team/howard-braithwaite.jpg"
+                        srcset="assets/img/team/howard-braithwaite-400.jpg 400w, assets/img/team/howard-braithwaite-720.jpg 720w, assets/img/team/howard-braithwaite.jpg 1200w"
+                        width="1200"
+                      />
+                    </picture>
                   </div>
                   <div class="founder-meta">Howard Braithwaite<br />Founder, MDS Search</div>
                   <a
