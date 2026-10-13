@@ -772,7 +772,7 @@ body:not([data-page="home"]) .navbar-glass{
   .hero-actions .btn{ width: 100%; }
   .proof-item{ padding: 1.15rem .5rem; }
   .proof-value{ font-size: .93rem; }
-  .proof-label{ font-size: .66rem; }
+  .proof-label{ font-size: .72rem; letter-spacing: .04em; }
   .founder-copy{ padding: 2rem 1.25rem; }
   .cta-panel{ margin-left: -.25rem; margin-right: -.25rem; border-radius: var(--mds-radius-md); }
   .practice-overview-grid,
