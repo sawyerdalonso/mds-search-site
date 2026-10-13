@@ -34,6 +34,20 @@ h1, h2, h3, h4, h5, h6{ color: var(--mds-ink); letter-spacing: -.025em; text-wra
 p{ line-height: 1.7; }
 a{ text-underline-offset: .18em; }
 
+/* One visible keyboard focus style: light on dark surfaces, brand blue on light ones.
+   !important because Bootstrap's .btn and .nav-link focus rules remove the outline. */
+:focus-visible{ outline: 3px solid #86aefc !important; outline-offset: 3px !important; box-shadow: none !important; }
+main :focus-visible,
+.footer :focus-visible{ outline-color: var(--mds-blue-700) !important; }
+.surface-navy :focus-visible,
+.proof-bar :focus-visible,
+.cta-panel :focus-visible,
+.founder-mark :focus-visible,
+.service-card.featured :focus-visible,
+.hero :focus-visible{ outline-color: #fff !important; }
+.form-control:focus-visible,
+.form-select:focus-visible{ outline: 0 !important; box-shadow: 0 0 0 .25rem rgba(30,79,184,.35) !important; }
+
 /* =============================================================
    3. TYPOGRAPHY HELPERS
    ============================================================= */
