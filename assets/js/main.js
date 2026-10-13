@@ -235,6 +235,25 @@
       || /(^|-)2g$/.test(connection.effectiveType || "");
   };
 
+  // Mobile menu toggle. Bootstrap's CSS handles the layout; this replaces its
+  // JavaScript bundle, which the site only used for this one control.
+  const menuToggle = document.querySelector(".navbar-toggler");
+  const menu = document.getElementById("navMain");
+  if (menuToggle && menu) {
+    const setMenu = open => {
+      menu.classList.toggle("show", open);
+      menuToggle.classList.toggle("collapsed", !open);
+      menuToggle.setAttribute("aria-expanded", String(open));
+    };
+    menuToggle.addEventListener("click", () => setMenu(!menu.classList.contains("show")));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && menu.classList.contains("show")) {
+        setMenu(false);
+        menuToggle.focus();
+      }
+    });
+  }
+
   // Navbar glass effect on scroll
   const nav = document.querySelector(".navbar-glass");
   const onScroll = () => {
