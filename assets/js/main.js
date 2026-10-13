@@ -84,8 +84,14 @@
     if (optionalTrackingLoaded || hasGlobalPrivacyControl()) return;
 
     optionalTrackingLoaded = true;
-    initApollo();
-    initInstantly();
+    // A vendor script failing must never affect the rest of the site.
+    [initApollo, initInstantly].forEach(init => {
+      try {
+        init();
+      } catch (error) {
+        // Ignore: optional tracking only.
+      }
+    });
   }
 
   function closeConsentPanel(returnFocus) {
@@ -211,16 +217,20 @@
     list.appendChild(item);
   }
 
-  addPrivacyChoicesLink();
+  try {
+    addPrivacyChoicesLink();
 
-  const consent = readConsent();
-  if (consent && consent.optionalTracking) {
-    loadOptionalTracking();
-  } else if (!consent && requiresOptIn) {
-    showConsentPanel();
-  } else if (!consent) {
-    loadOptionalTracking();
-    showConsentPanel({ isNotice: true });
+    const consent = readConsent();
+    if (consent && consent.optionalTracking) {
+      loadOptionalTracking();
+    } else if (!consent && requiresOptIn) {
+      showConsentPanel();
+    } else if (!consent) {
+      loadOptionalTracking();
+      showConsentPanel({ isNotice: true });
+    }
+  } catch (error) {
+    // Navigation, the footer year and the hero below must still run.
   }
 
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
