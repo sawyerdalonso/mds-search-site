@@ -257,16 +257,41 @@
     el.textContent = new Date().getFullYear();
   });
 
-  // Load the hero video only when motion is allowed and the device suits it. If
-  // autoplay or loading fails, remove the video cleanly and leave the CSS poster visible.
+  // Load the hero video only when motion is allowed and the device suits it. The
+  // CSS poster stays visible until playback actually starts, so a slow connection
+  // only delays the fade-in. If autoplay is blocked (e.g. Safari Low Power Mode or
+  // a browser autoplay setting), retry on the visitor's first interaction. Only a
+  // real load/decode error removes the video.
   const heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
     const source = heroVideo.querySelector("source[data-src]");
-    let fallbackTimer;
+    const gestureEvents = ["click", "keydown", "touchend"];
 
-    const clearFallbackTimer = () => window.clearTimeout(fallbackTimer);
+    const stopGestureRetry = () => {
+      gestureEvents.forEach(type => document.removeEventListener(type, retryOnGesture));
+    };
+    const waitForGesture = () => {
+      gestureEvents.forEach(type => document.addEventListener(type, retryOnGesture, { passive: true }));
+    };
+    const playVideo = () => {
+      // Set the property as well as the attribute; some engines only allow
+      // muted autoplay when the live muted state is true.
+      heroVideo.muted = true;
+      const attempt = heroVideo.play();
+      if (attempt && typeof attempt.catch === "function") {
+        attempt.catch(error => {
+          if (error && error.name === "NotAllowedError") waitForGesture();
+        });
+      }
+    };
+    const retryOnGesture = () => {
+      stopGestureRetry();
+      if (!prefersStillHero() && heroVideo.paused && source && source.hasAttribute("src")) {
+        playVideo();
+      }
+    };
     const showFallback = () => {
-      clearFallbackTimer();
+      stopGestureRetry();
       heroVideo.classList.remove("is-ready");
       heroVideo.classList.add("is-fallback");
       heroVideo.pause();
@@ -276,7 +301,7 @@
       }
     };
     const markReady = () => {
-      clearFallbackTimer();
+      stopGestureRetry();
       heroVideo.classList.remove("is-fallback");
       heroVideo.classList.add("is-ready");
     };
@@ -289,10 +314,7 @@
       heroVideo.classList.remove("is-fallback", "is-ready");
       source.setAttribute("src", source.dataset.src);
       heroVideo.load();
-      heroVideo.play().catch(showFallback);
-      fallbackTimer = window.setTimeout(() => {
-        if (heroVideo.paused || heroVideo.readyState < 2) showFallback();
-      }, 8000);
+      playVideo();
     };
 
     heroVideo.addEventListener("playing", markReady);
