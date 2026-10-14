@@ -8,6 +8,10 @@
 
   const hasGlobalPrivacyControl = () => navigator.globalPrivacyControl === true;
 
+  // Candidate and utility pages never load the visitor-identification trackers.
+  const noTrackingPages = ["candidates", "jobs", "thank-you", "404"];
+  const trackingPaused = noTrackingPages.includes(document.body.dataset.page);
+
   // US visitors get notice + opt-out. Visitors whose browser time zone places
   // them in Europe (EEA/UK/Switzerland) keep the opt-in flow GDPR requires.
   const requiresOptIn = (() => {
@@ -81,11 +85,17 @@
   }
 
   function loadOptionalTracking() {
-    if (optionalTrackingLoaded || hasGlobalPrivacyControl()) return;
+    if (optionalTrackingLoaded || hasGlobalPrivacyControl() || trackingPaused) return;
 
     optionalTrackingLoaded = true;
-    initApollo();
-    initInstantly();
+    // A vendor script failing must never affect the rest of the site.
+    [initApollo, initInstantly].forEach(init => {
+      try {
+        init();
+      } catch (error) {
+        // Ignore: optional tracking only.
+      }
+    });
   }
 
   function closeConsentPanel(returnFocus) {
@@ -120,18 +130,19 @@
     eyebrow.className = "privacy-consent__eyebrow";
     eyebrow.textContent = "Privacy choices";
     heading.id = "privacy-consent-title";
+    heading.className = "visually-hidden";
     if (globalPrivacyControl) {
       heading.textContent = "Optional tracking is off";
       description.textContent = "Your browser is sending a Global Privacy Control signal, so Apollo and Instantly visitor tracking will remain disabled.";
     } else if (isNotice) {
       heading.textContent = "A note on privacy";
-      description.textContent = "We use Apollo and Instantly visitor analytics to understand interest in our services and support relevant business outreach. You can opt out at any time.";
+      description.textContent = "We use Apollo and Instantly on this site to identify which companies visit and to support business outreach. You can opt out at any time.";
     } else {
       heading.textContent = "Your privacy, your choice";
-      description.textContent = "Optional visitor analytics help us understand interest in our services and support relevant outreach. The site and forms work without them.";
+      description.textContent = "May we use Apollo and Instantly to identify which companies visit and to support business outreach? The site and forms work fully without them.";
     }
     policyLink.href = "/privacy";
-    policyLink.textContent = "Read our privacy policy";
+    policyLink.textContent = "Privacy policy";
     actions.className = "privacy-consent__actions";
 
     copy.append(eyebrow, heading, description, policyLink);
@@ -180,6 +191,13 @@
       }
     }
 
+    if (isManaging || globalPrivacyControl) {
+      // Escape dismisses the panel without changing the stored choice.
+      panel.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeConsentPanel(trigger);
+      });
+    }
+
     document.body.appendChild(panel);
     const firstButton = panel.querySelector("button");
     if (isManaging && firstButton) firstButton.focus();
@@ -204,29 +222,52 @@
     list.appendChild(item);
   }
 
-  addPrivacyChoicesLink();
+  try {
+    addPrivacyChoicesLink();
 
-  const consent = readConsent();
-  if (consent && consent.optionalTracking) {
-    loadOptionalTracking();
-  } else if (!consent && requiresOptIn) {
-    showConsentPanel();
-  } else if (!consent) {
-    loadOptionalTracking();
-    showConsentPanel({ isNotice: true });
+    const consent = readConsent();
+    if (consent && consent.optionalTracking) {
+      loadOptionalTracking();
+    } else if (!consent && requiresOptIn && !trackingPaused) {
+      showConsentPanel();
+    } else if (!consent && !trackingPaused) {
+      loadOptionalTracking();
+      showConsentPanel({ isNotice: true });
+    }
+  } catch (error) {
+    // Navigation, the footer year and the hero below must still run.
   }
 
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
   const phoneViewport = window.matchMedia("(max-width: 767.98px)");
 
-  // Phones, Data Saver and very slow connections get the still hero image instead of ~6 MB of video.
+  // Reduced motion, Data Saver and very slow connections get the still hero image.
+  // Phones get the video too, using the 960 px files (under 1 MB).
   const prefersStillHero = () => {
     const connection = navigator.connection || {};
     return motionPreference.matches
-      || phoneViewport.matches
       || connection.saveData === true
       || /(^|-)2g$/.test(connection.effectiveType || "");
   };
+
+  // Mobile menu toggle. Bootstrap's CSS handles the layout; this replaces its
+  // JavaScript bundle, which the site only used for this one control.
+  const menuToggle = document.querySelector(".navbar-toggler");
+  const menu = document.getElementById("navMain");
+  if (menuToggle && menu) {
+    const setMenu = open => {
+      menu.classList.toggle("show", open);
+      menuToggle.classList.toggle("collapsed", !open);
+      menuToggle.setAttribute("aria-expanded", String(open));
+    };
+    menuToggle.addEventListener("click", () => setMenu(!menu.classList.contains("show")));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && menu.classList.contains("show")) {
+        setMenu(false);
+        menuToggle.focus();
+      }
+    });
+  }
 
   // Navbar glass effect on scroll
   const nav = document.querySelector(".navbar-glass");
@@ -250,53 +291,79 @@
     el.textContent = new Date().getFullYear();
   });
 
-  // Load the hero video only when motion is allowed and the device suits it. If
-  // autoplay or loading fails, remove the video cleanly and leave the CSS poster visible.
+  // Load the hero video only when motion is allowed and the device suits it. The
+  // CSS poster stays visible until playback actually starts, so a slow connection
+  // only delays the fade-in. If autoplay is blocked (e.g. Safari Low Power Mode or
+  // a browser autoplay setting), retry on the visitor's first interaction. Only a
+  // real load/decode error removes the video.
   const heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
-    const source = heroVideo.querySelector("source[data-src]");
-    let fallbackTimer;
+    // WebM first for Chrome, Edge and Firefox; MP4 after it for Safari.
+    const sources = [...heroVideo.querySelectorAll("source[data-src]")];
+    const hasSource = () => sources.some(source => source.hasAttribute("src"));
+    const gestureEvents = ["click", "keydown", "touchend"];
 
-    const clearFallbackTimer = () => window.clearTimeout(fallbackTimer);
+    const stopGestureRetry = () => {
+      gestureEvents.forEach(type => document.removeEventListener(type, retryOnGesture));
+    };
+    const waitForGesture = () => {
+      gestureEvents.forEach(type => document.addEventListener(type, retryOnGesture, { passive: true }));
+    };
+    const playVideo = () => {
+      // Set the property as well as the attribute; some engines only allow
+      // muted autoplay when the live muted state is true.
+      heroVideo.muted = true;
+      const attempt = heroVideo.play();
+      if (attempt && typeof attempt.catch === "function") {
+        attempt.catch(error => {
+          if (error && error.name === "NotAllowedError") waitForGesture();
+        });
+      }
+    };
+    const retryOnGesture = () => {
+      stopGestureRetry();
+      if (!prefersStillHero() && heroVideo.paused && hasSource()) {
+        playVideo();
+      }
+    };
     const showFallback = () => {
-      clearFallbackTimer();
+      stopGestureRetry();
       heroVideo.classList.remove("is-ready");
       heroVideo.classList.add("is-fallback");
       heroVideo.pause();
-      if (source && source.hasAttribute("src")) {
-        source.removeAttribute("src");
+      if (hasSource()) {
+        sources.forEach(source => source.removeAttribute("src"));
         heroVideo.load();
       }
     };
     const markReady = () => {
-      clearFallbackTimer();
+      stopGestureRetry();
       heroVideo.classList.remove("is-fallback");
       heroVideo.classList.add("is-ready");
     };
     const startVideo = () => {
-      if (prefersStillHero() || !source) {
+      if (prefersStillHero() || !sources.length) {
         showFallback();
         return;
       }
 
       heroVideo.classList.remove("is-fallback", "is-ready");
-      source.setAttribute("src", source.dataset.src);
+      const small = phoneViewport.matches;
+      sources.forEach(source => source.setAttribute("src", (small && source.dataset.srcSmall) || source.dataset.src));
       heroVideo.load();
-      heroVideo.play().catch(showFallback);
-      fallbackTimer = window.setTimeout(() => {
-        if (heroVideo.paused || heroVideo.readyState < 2) showFallback();
-      }, 8000);
+      playVideo();
     };
 
     heroVideo.addEventListener("playing", markReady);
     heroVideo.addEventListener("error", showFallback);
-    if (source) source.addEventListener("error", showFallback);
+    // A <source> error only means that format failed; fall back after the last one.
+    if (sources.length) sources[sources.length - 1].addEventListener("error", showFallback);
 
     const onPreferenceChange = () => {
       if (prefersStillHero()) showFallback();
       else if (!heroVideo.classList.contains("is-ready")) startVideo();
     };
-    [motionPreference, phoneViewport].forEach(query => {
+    [motionPreference].forEach(query => {
       if (query.addEventListener) query.addEventListener("change", onPreferenceChange);
       else query.addListener(onPreferenceChange);
     });
