@@ -241,11 +241,11 @@
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
   const phoneViewport = window.matchMedia("(max-width: 767.98px)");
 
-  // Phones, Data Saver and very slow connections get the still hero image instead of ~6 MB of video.
+  // Reduced motion, Data Saver and very slow connections get the still hero image.
+  // Phones get the video too, using the 960 px files (under 1 MB).
   const prefersStillHero = () => {
     const connection = navigator.connection || {};
     return motionPreference.matches
-      || phoneViewport.matches
       || connection.saveData === true
       || /(^|-)2g$/.test(connection.effectiveType || "");
   };
@@ -348,7 +348,8 @@
       }
 
       heroVideo.classList.remove("is-fallback", "is-ready");
-      sources.forEach(source => source.setAttribute("src", source.dataset.src));
+      const small = phoneViewport.matches;
+      sources.forEach(source => source.setAttribute("src", (small && source.dataset.srcSmall) || source.dataset.src));
       heroVideo.load();
       playVideo();
     };
@@ -362,7 +363,7 @@
       if (prefersStillHero()) showFallback();
       else if (!heroVideo.classList.contains("is-ready")) startVideo();
     };
-    [motionPreference, phoneViewport].forEach(query => {
+    [motionPreference].forEach(query => {
       if (query.addEventListener) query.addEventListener("change", onPreferenceChange);
       else query.addListener(onPreferenceChange);
     });

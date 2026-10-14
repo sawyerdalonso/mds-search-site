@@ -230,10 +230,6 @@ body:not([data-page="home"]) .navbar-glass{
 .hero-video.is-ready{ opacity: .84; }
 .hero-video.is-fallback{ display: none; }
 
-/* Phones get the still image: faster on cellular, and the video's detail is lost at that size */
-@media (max-width: 767.98px){
-  .hero-video{ display: none; }
-}
 
 /* Users who prefer reduced motion see only the still poster/fallback image */
 @media (prefers-reduced-motion: reduce){
