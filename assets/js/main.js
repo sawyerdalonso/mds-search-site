@@ -8,8 +8,8 @@
 
   const hasGlobalPrivacyControl = () => navigator.globalPrivacyControl === true;
 
-  // Utility pages never load the visitor-identification trackers.
-  const noTrackingPages = ["thank-you", "404"];
+  // Candidate and utility pages never load the visitor-identification trackers.
+  const noTrackingPages = ["candidates", "jobs", "thank-you", "404"];
   const trackingPaused = noTrackingPages.includes(document.body.dataset.page);
 
   // US visitors get notice + opt-out. Visitors whose browser time zone places
