@@ -8,6 +8,10 @@
 
   const hasGlobalPrivacyControl = () => navigator.globalPrivacyControl === true;
 
+  // Utility pages never load the visitor-identification trackers.
+  const noTrackingPages = ["thank-you", "404"];
+  const trackingPaused = noTrackingPages.includes(document.body.dataset.page);
+
   // US visitors get notice + opt-out. Visitors whose browser time zone places
   // them in Europe (EEA/UK/Switzerland) keep the opt-in flow GDPR requires.
   const requiresOptIn = (() => {
@@ -81,7 +85,7 @@
   }
 
   function loadOptionalTracking() {
-    if (optionalTrackingLoaded || hasGlobalPrivacyControl()) return;
+    if (optionalTrackingLoaded || hasGlobalPrivacyControl() || trackingPaused) return;
 
     optionalTrackingLoaded = true;
     // A vendor script failing must never affect the rest of the site.
@@ -224,9 +228,9 @@
     const consent = readConsent();
     if (consent && consent.optionalTracking) {
       loadOptionalTracking();
-    } else if (!consent && requiresOptIn) {
+    } else if (!consent && requiresOptIn && !trackingPaused) {
       showConsentPanel();
-    } else if (!consent) {
+    } else if (!consent && !trackingPaused) {
       loadOptionalTracking();
       showConsentPanel({ isNotice: true });
     }
