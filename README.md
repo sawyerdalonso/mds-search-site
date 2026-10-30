@@ -8,7 +8,7 @@ Marketing website for [MDS Search](https://www.mdssearch.com), a founder-led ret
 
 - **Static and fast.** Hand-written HTML, CSS and vanilla JavaScript with no build step or framework. Bootstrap 5.3 CSS loads from a CDN; fonts and icons are self-hosted.
 - **Client and candidate journeys.** Separate paths for hiring leaders (services, process, FAQ, contact) and candidates (open roles, confidential resume intake).
-- **Netlify Forms** for the contact and candidate-intake forms, with honeypot spam protection and a branded thank-you page.
+- **Netlify Forms** for the contact and candidate-intake forms, with honeypot spam protection, a small Edge Function that rejects blank posts, and a branded thank-you page.
 - **Responsive hero video** with WebM and MP4 sources, smaller files for phones, and a still image for Data Saver, slow connections and reduced-motion settings.
 - **Privacy-aware visitor analytics.** A first-party consent layer loads the Apollo and Instantly trackers with a notice and opt-out, switches to opt-in for European visitors, honors Global Privacy Control and never loads them on candidate pages.
 - **SEO and sharing.** Clean extensionless URLs, canonical tags, sitemap, Open Graph images and schema.org structured data (organization, founder and FAQ).
@@ -39,6 +39,7 @@ Marketing website for [MDS Search](https://www.mdssearch.com), a founder-led ret
 │   └── video/                 # hero video (WebM + MP4, desktop and 960 px phone)
 ├── _redirects                 # clean URL rewrites for Netlify
 ├── _headers                   # security headers for Netlify
+├── netlify/edge-functions/    # form-guard.js rejects blank form posts
 ├── sitemap.xml, robots.txt
 └── favicon.ico
 ```

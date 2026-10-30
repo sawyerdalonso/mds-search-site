@@ -41,7 +41,7 @@ HTML is formatted with Prettier (`npm run format`, config in `.prettierrc.json`)
 
 **Headers:** `_headers` sets baseline security headers on Netlify. No Content-Security-Policy is set, because the trackers and the Loxo job-board embed load third-party scripts.
 
-**Forms:** `contact.html` and `candidates.html` use Netlify Forms and redirect successful submissions to `/thank-you`. Preserve their form names, hidden `form-name` inputs, and honeypots.
+**Forms:** `contact.html` and `candidates.html` use Netlify Forms and redirect successful submissions to `/thank-you`. Preserve their form names, hidden `form-name` inputs, and honeypots. Netlify does not enforce `required` on the server, so `netlify/edge-functions/form-guard.js` rejects POSTs with empty required fields before they reach Forms; if a form's name or required fields change, update its `requiredFields` map to match.
 
 ## Page–Nav Wiring
 
